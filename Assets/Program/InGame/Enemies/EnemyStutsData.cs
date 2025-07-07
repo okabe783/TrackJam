@@ -16,6 +16,9 @@ public class EnemyStutsData : ScriptableObject
     [Header("敵のタイプ")]
     public EnemyType enemyType;
 
+    [Header("LongRange設定")]
+    public float FireInterval;
+
     public enum EnemyType
     {
         ShortRange,

@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("敵のステータス設定")]
-    [SerializeField] private float _fireInterval = 2f;
-
     [Header("プレイヤー参照")]
     [SerializeField] GameObject _player;  //プレイヤーオブジェクト
     [SerializeField] Transform _muzzle;  //発射口
@@ -17,23 +14,31 @@ public class Enemy : MonoBehaviour
     [Header("StatsData参照")]
     [SerializeField] EnemyStutsData _stutsdata;  //敵別ステータスの設定
 
+    [HideInInspector] public bool _isPlayerInRange;
+
     private int _currentHp;
     private int _currentAtk;
+    private float _fireInterval;
     private float _timer;
 
     void Awake()
     {
         _currentHp = _stutsdata.MAXHP;
         _currentAtk = _stutsdata.ATK;
+        _fireInterval = _stutsdata.FireInterval;
     }
 
     void Update()
     {
         if (_player == null) return;
 
-        EnemyMove();
+        if (!_isPlayerInRange)
+        {
+            EnemyMove();
+        }
 
-        if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange)
+        if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange
+            && _isPlayerInRange)
         {
             EnemyFired();
         }
@@ -56,8 +61,12 @@ public class Enemy : MonoBehaviour
 
         if (_fireInterval < _timer)
         {
+            Debug.Log("発射");
+            _playerPos = _player.transform.position; // 発射時に最新位置を取得
+
             var bullet = Instantiate(_bullet, _muzzle.position, Quaternion.identity);
             bullet.GetComponent<EnemyBullet>().SetDirection(_playerPos);
+
             _timer = 0f;
         }
     }
@@ -86,6 +95,25 @@ public class Enemy : MonoBehaviour
     {
         //PlayerControler playerControler = collision.gameObject.GetComponent<PlayerControler>();
         //playerControler.TakeDamage(_currentAtk);
+
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange
+    //        && collision.gameObject.CompareTag("PlayerSerchArea"))
+    //    {
+    //        EnemyFired();
+    //    }
+    //}
+
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange
+    //        && collision.gameObject.CompareTag("PlayerSerchArea"))
+    //    {
+    //        EnemyFired();
+    //    }
+    //}
 
 }

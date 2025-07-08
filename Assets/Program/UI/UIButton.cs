@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /// <summary>ButtonUIにアタッチするクラス </summary>
 public class UIButton : MonoBehaviour,IPointerClickHandler,IPointerDownHandler,IPointerUpHandler
 {
-    [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private Text _text;
     [SerializeField] private Color _pressedColor = Color.gray;
 
     private Action _onClickCallback;

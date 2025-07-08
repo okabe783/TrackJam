@@ -32,13 +32,22 @@ public class Enemy : MonoBehaviour
     {
         if (_player == null) return;
 
+        _timer += Time.deltaTime;
+
+        if (_muzzle)
+        {
+            FacePlayer();
+        }
+
         if (!_isPlayerInRange)
         {
             EnemyMove();
         }
 
         if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange
-            && _isPlayerInRange)
+            && _isPlayerInRange
+            && _bullet 
+            && _muzzle)
         {
             EnemyFired();
         }
@@ -55,10 +64,11 @@ public class Enemy : MonoBehaviour
         //Vector2.MoveTowards(a, b, maxDistanceDelta) は、「a から b へ maxDistanceDelta 分だけ進む」
     }
 
+    /// <summary>
+    /// 遠距離攻撃
+    /// </summary>
     private void EnemyFired()
     {
-        _timer += Time.deltaTime;
-
         if (_fireInterval < _timer)
         {
             Debug.Log("発射");
@@ -69,6 +79,19 @@ public class Enemy : MonoBehaviour
 
             _timer = 0f;
         }
+    }
+
+    /// <summary>
+    /// 敵の向きや銃口進んでいる向きに変える
+    /// </summary>
+    private void FacePlayer()
+    {
+        Vector3 dir = _player.transform.position - transform.position;
+
+        transform.localScale = new Vector3(Mathf.Sign(dir.x), 1, 1);
+
+        // デバッグ：プレイヤーへのライン
+        Debug.DrawLine(_muzzle.position, _player.transform.position, Color.red);
     }
 
     /// <summary>
@@ -97,23 +120,4 @@ public class Enemy : MonoBehaviour
         //playerControler.TakeDamage(_currentAtk);
 
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange
-    //        && collision.gameObject.CompareTag("PlayerSerchArea"))
-    //    {
-    //        EnemyFired();
-    //    }
-    //}
-
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange
-    //        && collision.gameObject.CompareTag("PlayerSerchArea"))
-    //    {
-    //        EnemyFired();
-    //    }
-    //}
-
 }

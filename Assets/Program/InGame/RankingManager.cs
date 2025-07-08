@@ -9,7 +9,7 @@ public class RankingManager : MonoBehaviour
 
     void Start()
     {
-        int _currentScores = ScoreManager.instance.Score;// スコアをManagerから取得
+        int _currentScores = ScoreManager.I.Score;// スコアをManagerから取得
 
         List<int> scores = LoadScores();// スコアを取得
 

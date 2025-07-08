@@ -22,6 +22,9 @@ public class EnemyStutsData : ScriptableObject
     public enum EnemyType
     {
         ShortRange,
-        LongRange
+        LongRange,
+        FirstBoss,
+        SecondBoss,
+        LastBoss
     }
 }

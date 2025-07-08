@@ -6,9 +6,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("プレイヤー参照")]
-    [SerializeField] GameObject _player;  //プレイヤーオブジェクト
     [SerializeField] Transform _muzzle;  //発射口
     [SerializeField] GameObject _bullet;  //弾
+    [SerializeField] GameObject _player;  //プレイヤーオブジェクト
     Vector3 _playerPos;  //プレイヤーの現在位置
 
     [Header("StatsData参照")]
@@ -28,6 +28,11 @@ public class Enemy : MonoBehaviour
         _fireInterval = _stutsdata.FireInterval;
     }
 
+    //public void Init(Player player)
+    //{
+    //    _player = player;
+    //}
+
     void Update()
     {
         if (_player == null) return;
@@ -46,7 +51,7 @@ public class Enemy : MonoBehaviour
 
         if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange
             && _isPlayerInRange
-            && _bullet 
+            && _bullet
             && _muzzle)
         {
             EnemyFired();

@@ -6,13 +6,19 @@ public class EnemyBullet : MonoBehaviour
 {
     [SerializeField] private float _bulletSpeed = 1f;  //弾速
     Vector2 _direction;
+    private int _power;
 
-    // Update is called once per frame
+    public void Initialize (int power)
+    {
+        _power = power;
+    }
+
     void FixedUpdate()
     {
         Fire();
     }
 
+    
 
     public void SetDirection(Vector2 targetPosition)
     {

@@ -5,34 +5,42 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     [Header("プレイヤー参照")]
-    [SerializeField] Transform _muzzle;  //発射口
-    [SerializeField] GameObject _bullet;  //弾
-    [SerializeField] GameObject _player;  //プレイヤーオブジェクト
-    Vector3 _playerPos;
+    [SerializeField] private Transform _muzzle;  //発射口
+    [SerializeField] private GameObject _bullet;  //弾
+    [SerializeField] private GameObject _player;  //プレイヤーオブジェクト
+    [SerializeField] private GameObject _straightBullet;
+    private Vector3 _playerPos;
 
 
     [Header("テレポート設定")]
-    [SerializeField] float _teleportMinDistance = 3;
-    [SerializeField] float _teleportMaxDistance = 5;
-    [SerializeField] float _teleportInterval = 2;
-    float _teleportTheta;
-    Vector3 _teleportPosition;
+    [SerializeField] private float _teleportMinDistance = 3f;  //テレポートのプレイヤーからの最小距離
+    [SerializeField] private float _teleportMaxDistance = 5f;  //テレポートのプレイヤーからの最大距離
+    [SerializeField] private float _teleportInterval = 2f;  //テレポートのインターバル
+    private float _teleportTheta;
+    private Vector3 _teleportPosition;
 
-    [Header("")]
+    [Header("全体攻撃設定")]
+    [SerializeField] float _fireAllDirectionInterval = 0f;  //一つを撃つ間のインターバル
+    [SerializeField] float initAngle = 0f;  //初期角度
+    [SerializeField] Transform _muzzleTransform = default; 　//muzzleの位置
+    [SerializeField] float _muzzleToObjectOriginDistance = 0f;  //プレイヤーからのマズルの位置
+    [SerializeField] float _allRangefireInterval = 3f;  //全方位攻撃のインターバル
+    [SerializeField] int _bulletCount = 6;  //弾の数(360を割る数）
 
     [Header("StatsData参照")]
-    [SerializeField] EnemyStutsData _stutsdata;  //敵別ステータスの設定
+    [SerializeField] EnemyStutsData _stutsData;  //敵別ステータスの設定
 
     private float _fireInterval;
     private int _power;
 
-    float _teleportTimer;
-    float _fireTimer;
-
+    private float _teleportTimer;
+    private float _fireTimer;
+    private float _allRangefireTimer;
+    private bool _isFiringAllDirection;
     void Start()
     {
-        _fireInterval = _stutsdata.FireInterval;
-        _power = _stutsdata.ATK;
+        _fireInterval = _stutsData.FireInterval;
+        _power = _stutsData.ATK;
     }
 
     //public void Init(Player player)
@@ -44,6 +52,7 @@ public class Boss : MonoBehaviour
     {
         _teleportTimer += Time.deltaTime;
         _fireTimer += Time.deltaTime;
+        _allRangefireTimer += Time.deltaTime;
 
 
         if (_teleportInterval < _teleportTimer)
@@ -51,15 +60,23 @@ public class Boss : MonoBehaviour
             Teleport();
         }
 
-        if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LastBoss
+        if (_stutsData.enemyType == EnemyStutsData.EnemyType.LastBoss
          && _bullet
          && _muzzle)
         {
             BossFired();
         }
 
+        if (_allRangefireTimer > _allRangefireInterval)
+        {
+            AllRangeFired();
+        }
+
     }
 
+    /// <summary>
+    /// プレイヤーの一定距離内の転移
+    /// </summary>
     private void Teleport()
     {
         _teleportTheta = Random.Range(0, 360);
@@ -73,6 +90,9 @@ public class Boss : MonoBehaviour
         _teleportTimer = 0;
     }
 
+    /// <summary>
+    /// プレイヤーに向かっての遠距離攻撃
+    /// </summary>
     private void BossFired()
     {
         if (_fireInterval < _fireTimer)
@@ -81,41 +101,66 @@ public class Boss : MonoBehaviour
             _playerPos = _player.transform.position; // 発射時に最新位置を取得
 
             var bullet = Instantiate(_bullet, _muzzle.position, Quaternion.identity);
-            var enemyBullet = bullet.GetComponent<EnemyBullet>();
+            var enemyBullet = bullet.GetComponent<TargetBullet>();
             enemyBullet.SetDirection(_playerPos);
             enemyBullet.Initialize(_power);
             _fireTimer = 0f;
         }
     }
 
-    private IEnumerator FireAllDirection(int bulletCount = 6)
+    /// <summary>
+    /// 全方位攻撃の開始コルーチン
+    /// </summary>
+    private void AllRangeFired()
     {
-        if (bulletCount <= 0) yield break;
+        if (_isFiringAllDirection) return;
+        StartCoroutine(FireAllDirection());
+    }
 
-        const float fullRotation = 360;
+    /// <summary>
+    /// 全方位攻撃
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator FireAllDirection()
+    {
+        if (_bulletCount <= 0) yield break;
 
-        float fireAllDirectionInterval = 0; //
-        float initAngle = 0f; //
-        float addAngle = fullRotation / bulletCount;
-        Transform muzzleTransform = default; //
-        Vector3 initMuzzlePosion = muzzleTransform.position;
-        Quaternion initMuzzleRotation = muzzleTransform.rotation;
-        float _muzzleToObjectOriginDistance = 0f; //
+        _isFiringAllDirection = true;
 
-        for (float crrentAngle = initAngle;
-            crrentAngle < initAngle + fullRotation;
-            crrentAngle += addAngle)
+        const float fullRotation = 360f;
+
+        float addAngle = fullRotation / _bulletCount;
+        Vector3 initMuzzlePosion = _muzzleTransform.position;
+        Quaternion initMuzzleRotation = _muzzleTransform.rotation;
+        Debug.Log("addAngleは" + addAngle);
+
+        for (float currentAngle = initAngle;
+            currentAngle < initAngle + fullRotation;
+            currentAngle += addAngle)
         {
-            muzzleTransform.position = new Vector3(_muzzleToObjectOriginDistance * Mathf.Cos(crrentAngle) + _player.transform.position.x
-                                                , _muzzleToObjectOriginDistance * Mathf.Sin(crrentAngle) + _player.transform.position.y
-                                                , 0f);
+            float rad = currentAngle * Mathf.Deg2Rad;  //sin,cosを使うのでradへ変換
 
-            muzzleTransform.rotation = new Quaternion(muzzleTransform.rotation.x, muzzleTransform.rotation.y, crrentAngle, muzzleTransform.rotation.w);
+            // ボスの中心からの位置でマズルを回す
+            Vector3 offset = new Vector3(
+                _muzzleToObjectOriginDistance * Mathf.Cos(rad),
+                _muzzleToObjectOriginDistance * Mathf.Sin(rad),
+                0f);
 
-            yield return new WaitForSeconds(fireAllDirectionInterval);
+            _muzzleTransform.position = this.transform.position + offset;
+
+            // Z軸を回転（クォータニオンで角度を指定）
+            _muzzleTransform.rotation = Quaternion.Euler(0f, 0f, currentAngle);
+
+            Instantiate(_straightBullet, _muzzleTransform.position, _muzzleTransform.rotation);
+
+            yield return new WaitForSeconds(_fireAllDirectionInterval);
         }
+        
+        //muzzleの位置と角度を初期化
+        _muzzleTransform.position = initMuzzlePosion;
+        _muzzleTransform.rotation = initMuzzleRotation;
 
-        muzzleTransform.position = initMuzzlePosion;
-        muzzleTransform.rotation = initMuzzleRotation;
+        _allRangefireTimer = 0f;
+        _isFiringAllDirection = false;
     }
 }

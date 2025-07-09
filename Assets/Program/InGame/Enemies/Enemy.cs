@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -8,7 +5,7 @@ public class Enemy : MonoBehaviour
     [Header("プレイヤー参照")]
     [SerializeField] private Transform _muzzle;  //発射口
     [SerializeField] private GameObject _bullet;  //弾
-    [SerializeField] private GameObject _player;  //プレイヤーオブジェクト
+    [SerializeField] private PlayerController _player;  //プレイヤーオブジェクト
     private Vector3 _playerPos;  //プレイヤーの現在位置
 
     [Header("StatsData参照")]
@@ -17,7 +14,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public bool _isPlayerInRange;
 
     private int _currentHp;
-    private int _currentAtk;
+    public int _currentAtk;
     private float _fireInterval;
     private float _timer;
 
@@ -28,10 +25,10 @@ public class Enemy : MonoBehaviour
         _fireInterval = _stutsData.FireInterval;
     }
 
-    //public void Init(Player player)
-    //{
-    //    _player = player;
-    //}
+    public void Init(PlayerController player)
+    {
+        _player = player;
+    }
 
     void Update()
     {

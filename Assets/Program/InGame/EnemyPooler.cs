@@ -1,15 +1,14 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
+    [SerializeField] private PlayerController _player;
     [SerializeField] public GameObject EnemyPrefab;
     //生成する数
     [SerializeField] public int poolSize = 20;
     //生成したオブジェクトを管理するリスト
-    public List<GameObject> pool;
+    private List<GameObject> pool;
     //親オブジェクトを格納しておく
     public GameObject poolContainer;
 
@@ -31,8 +30,6 @@ public class ObjectPooler : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             CreateObject();
-            
-            
         }
     }
 
@@ -44,6 +41,7 @@ public class ObjectPooler : MonoBehaviour
     {
         //オブジェクトを作成して変数に格納する
         GameObject newInstance = Instantiate(EnemyPrefab);
+        newInstance.GetComponent<Enemy>().Init(_player);
 
         //親の設定
         newInstance.transform.SetParent(poolContainer.transform);

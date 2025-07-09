@@ -1,44 +1,66 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveController : MonoBehaviour
+/// <summary>
+/// Playerオブジェクトの親にアタッチするクラス
+/// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerController : MonoBehaviour
 {
-    [SerializeField] StatusData statusData;
-    private Rigidbody2D rb;
+    // スタックメモリ
+    [SerializeField] StatusData _statusData;
+    private Rigidbody2D _rb;
     private Vector2 _moveInput;
 
-    // Start is called before the first frame update
+    private int _maxHp;
+    private float _moveSpeed;
+    private int _currentHp;
+    private bool _isDead;
+
+    private void Awake()
+    {
+        _maxHp = _statusData._hp;
+        _moveSpeed = _statusData._moveSpeed;
+        _isDead = false;
+    }
+    
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
+        _currentHp = _maxHp;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        ///<summary>
-        ///移動処理
-        float _movex = Input.GetAxisRaw("Horizontal");
-        float _movey = Input.GetAxisRaw("Vertical");
-
-        _moveInput = new Vector2(_movex, _movey).normalized;
+        Move();
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = statusData._moveSpeed * _moveInput;
+        _rb.velocity = _moveSpeed * _moveInput;
+    }
+
+    // 移動処理
+    private void Move()
+    {
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+
+        _moveInput = new Vector2(moveX, moveY).normalized;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("残りのHPは"+statusData._hp--);
-            statusData._hp = statusData._hp--;
+            int enemyAtk = collision.gameObject.GetComponent<Enemy>()._currentAtk;
+            
+            // ここで敵の攻撃力分のダメージを受ける
+            _currentHp -= enemyAtk;
 
-            if (statusData._hp == 0)
+            if (_currentHp == 0 && _isDead == false)
             {
+                // バグらないようにフラグをたてる
+                _isDead = true;
                 Debug.Log("ゲームオーバー");
                 //ゲームオーバー処理を書く
             }

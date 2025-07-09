@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D.Animation;
@@ -10,13 +11,17 @@ public class EnemyTimer : MonoBehaviour
     [SerializeField] float _gametimer = 15f;
     [SerializeField,Header("ファーストの敵の変化時間")] float _firstweve = 10;
     [SerializeField] float _secondweve = 20;  //2回目のウェーブ変化
+    
+    Spawner _spawner;
+
+
 
     //敵のウェーブを時間ごとで変えていきたい　ボスの出現をここに書くかどうか
 
     // Start is called before the first frame update
     void Start()
     {
-
+      _spawner = GetComponent<Spawner>();
     }
 
     // Update is called once per frame
@@ -37,7 +42,7 @@ public class EnemyTimer : MonoBehaviour
     }
     void EnemyUptime()
     {
-        //せなからもらうコードでウェーブの処理を書く
+        //maxRandomDelay += 15;//せなのパブリック待ち
     }
     void BossSupon()
     {

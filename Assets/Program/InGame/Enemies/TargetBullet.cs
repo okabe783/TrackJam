@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBullet : MonoBehaviour
+public class TargetBullet : MonoBehaviour
 {
     [SerializeField] private float _bulletSpeed = 1f;  //弾速
     Vector2 _direction;
@@ -17,8 +17,6 @@ public class EnemyBullet : MonoBehaviour
     {
         Fire();
     }
-
-    
 
     public void SetDirection(Vector2 targetPosition)
     {

@@ -6,13 +6,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("プレイヤー参照")]
-    [SerializeField] Transform _muzzle;  //発射口
-    [SerializeField] GameObject _bullet;  //弾
-    [SerializeField] GameObject _player;  //プレイヤーオブジェクト
-    Vector3 _playerPos;  //プレイヤーの現在位置
+    [SerializeField] private Transform _muzzle;  //発射口
+    [SerializeField] private GameObject _bullet;  //弾
+    [SerializeField] private GameObject _player;  //プレイヤーオブジェクト
+    private Vector3 _playerPos;  //プレイヤーの現在位置
 
     [Header("StatsData参照")]
-    [SerializeField] EnemyStutsData _stutsdata;  //敵別ステータスの設定
+    [SerializeField] EnemyStutsData _stutsData;  //敵別ステータスの設定
 
     [HideInInspector] public bool _isPlayerInRange;
 
@@ -23,9 +23,9 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        _currentHp = _stutsdata.MAXHP;
-        _currentAtk = _stutsdata.ATK;
-        _fireInterval = _stutsdata.FireInterval;
+        _currentHp = _stutsData.MAXHP;
+        _currentAtk = _stutsData.ATK;
+        _fireInterval = _stutsData.FireInterval;
     }
 
     //public void Init(Player player)
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
             EnemyMove();
         }
 
-        if (_stutsdata.enemyType == EnemyStutsData.EnemyType.LongRange
+        if (_stutsData.enemyType == EnemyStutsData.EnemyType.LongRange
             && _isPlayerInRange
             && _bullet
             && _muzzle)
@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
     {
         _playerPos = _player.transform.position;  //プレイヤーの現在位置を取得
         transform.position =
-            Vector2.MoveTowards(transform.position, _playerPos, _stutsdata.SPEED * Time.deltaTime);
+            Vector2.MoveTowards(transform.position, _playerPos, _stutsData.SPEED * Time.deltaTime);
         //Vector2.MoveTowards(a, b, maxDistanceDelta) は、「a から b へ maxDistanceDelta 分だけ進む」
     }
 
@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
             _playerPos = _player.transform.position; // 発射時に最新位置を取得
 
             var bullet = Instantiate(_bullet, _muzzle.position, Quaternion.identity);
-            bullet.GetComponent<EnemyBullet>().SetDirection(_playerPos);
+            bullet.GetComponent<TargetBullet>().SetDirection(_playerPos);
 
             _timer = 0f;
         }

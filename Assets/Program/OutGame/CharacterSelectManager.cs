@@ -1,29 +1,31 @@
-using Program.Common;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
-namespace Program.OutGame
-{
-    // キャラクターデータを格納
     public class CharacterSelectManager : MonoBehaviour
     {
-        [SerializeField,Header("保存したい場所")] private CharacterSettings _characterSettings;
-        [SerializeField,Header("決定ボタン")] private UIButton _characterSelectButton;
-        
+        [SerializeField] private Image _characterImage;
+        [SerializeField] private Vector2 _startPosition;
+        [SerializeField] private Vector2 _goalPosition;
+        [SerializeField] private float _slideDuration = 0.5f;
+
+        private RectTransform _characterImageRect;
+
         public int CharacterID;
 
-        public void Start()
+        private void Awake()
         {
-            _characterSelectButton.OnClickAddListener(SelectCharacter);
+            _characterImageRect = _characterImage.GetComponent<RectTransform>();
         }
 
-        // 決定ボタンを押したときにデータを保存する
-        private void SelectCharacter()
+        // キャラIDとSpriteを受け取って表示演出する
+        public void ShowCharacter(int characterID, Sprite characterSprite)
         {
-            // Dataを保存する
-            _characterSettings.CharacterID = CharacterID;
-            Debug.Log(_characterSettings.CharacterID);
-            // シーンの遷移
-            SceneChanger.I.ChangeScene("02_InGame");
+            CharacterID = characterID;
+
+            _characterImage.sprite = characterSprite;
+            _characterImageRect.anchoredPosition = _startPosition;
+
+            _characterImageRect.DOAnchorPos(_goalPosition, _slideDuration).SetEase(Ease.OutCubic);
         }
     }
-}

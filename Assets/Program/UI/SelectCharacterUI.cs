@@ -1,30 +1,22 @@
-using Program.OutGame;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Program.UI
+public class SelectCharacterUI : MonoBehaviour
 {
-    // キャラクター選択画面のボタンの処理を管理
-    public class SelectCharacterUI : MonoBehaviour
+    private UIButton _characterButton;
+
+    [SerializeField] private CharacterSelectManager _characterSelectManager;
+    [SerializeField] private Sprite _characterSprite;
+    [SerializeField] private int _characterIndex;
+
+    public void Start()
     {
-        [SerializeField] private CharacterSelectManager _characterSelectManager;
-        private UIButton _characterButton;
-        [SerializeField] private Image _characterImage;
-        [SerializeField,Header("キャラクターのID")] private int _characterIndex;
-        [SerializeField,Header("Spriteに表示したいSprite")] private Sprite _characterSprite;
-        
-        public void Start()
-        {
-            _characterButton = GetComponent<UIButton>();
-            _characterButton.OnClickAddListener(SelectCharacter);
-        }
-        
-        private void SelectCharacter()
-        {
-            // Spriteの切り替え
-            _characterImage.sprite = _characterSprite;
-            // 押されたキャラクターの情報を教えてあげる
-            _characterSelectManager.CharacterID = _characterIndex;
-        }
+        _characterButton = GetComponent<UIButton>();
+        _characterButton.OnClickAddListener(OnSelect);
+    }
+
+    private void OnSelect()
+    {
+        // キャラIDとスプライトを渡して表示演出だけ任せる
+        _characterSelectManager.ShowCharacter(_characterIndex, _characterSprite);
     }
 }

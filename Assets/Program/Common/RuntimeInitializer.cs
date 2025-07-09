@@ -2,9 +2,6 @@ using UnityEngine;
 
 public static class RuntimeInitializer
 {
-    /// <summary>
-    /// Awakeよりも早く実行されるメソッド
-    /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void RuntimeInitializeOnLoadMethod()
     {

@@ -1,41 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("必要なコンポーネント")]
-    [SerializeField] private Text TimerText;
-    [SerializeField] 
     //変数
-    private bool _stopTime=false;
-   [SerializeField]public float _timer = 200;//中ボスが出るまで
+    [Header("必要なコンポーネント")]
+    [SerializeField] private Text _timerText;
+    
+    [SerializeField] private float _gameTimer;
+    
+    public bool _stopTime;
 
     void Start()
     {
-
+        _stopTime = false;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         Timer();
     }
     private void Timer()
     {
-        if (!_stopTime&&TimerText!=null)
+        if (!_stopTime && _timerText!= null)
         {
-            _timer -= Time.deltaTime; 
-            TimerText.text = _timer.ToString();
+            _gameTimer += Time.deltaTime; 
+            _timerText.text = _gameTimer.ToString();
         }
-
-        if (_timer<1)
-        {
-            Debug.Log("BOSS");
-            GameObject.Destroy(TimerText);
-            TimerText = null;
-        }
-
     }
 }

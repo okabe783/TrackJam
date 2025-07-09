@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 //スポーンモード
 public enum Spawnmodes
@@ -18,17 +17,23 @@ public class Spawner : MonoBehaviour
     //スポーンモードの選択
     [SerializeField] private Spawnmodes spawnModes = Spawnmodes.constant;
     //最短のスポーン間隔
-    [SerializeField] private float minRandomDelay;
+    [SerializeField] public float minRandomDelay;
     //最長のスポーン間隔
-    [SerializeField] private float maxRandomDelay;
+    [SerializeField] public float maxRandomDelay;
     //一定モードのスポーン時間
-    [SerializeField] private float constantSpawnTime;
+    [SerializeField] public float constantSpawnTime;
     //スポーンさせる数を設定する
-    [SerializeField] private int enemyCount = 10;
+    [SerializeField] public int enemyCount = 10;
+
+    [SerializeField] public int poolSize = 20;
+
+    [SerializeField]public GameObject EnemyPrefab;        // 敵プレハブ（Enemy）
+
+    
     //タイマー変数
-    private float spawnTimer;
+    public float spawnTimer;
     //スポーンさせた数（数を追加していく）
-    private float spawned;
+    public float spawned;
     //enemyのオブジェクトプール用
     private ObjectPooler pooler;
     
@@ -37,7 +42,8 @@ public class Spawner : MonoBehaviour
     {
         //変数にコンポーネントを格納する
         pooler = GetComponent<ObjectPooler>();
-       
+
+        
     }
 
     private void Update()
@@ -69,7 +75,7 @@ public class Spawner : MonoBehaviour
     private void SpawnEnemy()
     {
         //プールから取得して変数に格納
-        GameObject newInstance = pooler.GetObjectFromPool();
+        GameObject newInstance = pooler.GetObjectFromPool();   
         //エネミーの初期設定
         SetEnemy(newInstance);
         //表示する
@@ -78,12 +84,12 @@ public class Spawner : MonoBehaviour
 
     private void SetEnemy(GameObject newInstance)
     {
-       
+        //enemyでMovepointを使えるように格納している
+        Enemy enemy = newInstance.GetComponent<Enemy>();
        
         //生成位置をこのオブジェクトの位置に設定
         enemy.transform.position = transform.position;
-        //スピードの設定
-        enemy.SetMoveSpeed();
+        
 
     }
 

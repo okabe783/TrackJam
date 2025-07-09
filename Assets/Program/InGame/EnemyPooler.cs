@@ -5,21 +5,19 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-    //生成するアイテム
-    [SerializeField] private GameObject poolObject;
+    [SerializeField] public GameObject EnemyPrefab;
     //生成する数
-    [SerializeField] private int poolSize = 20;
+    [SerializeField] public int poolSize = 20;
     //生成したオブジェクトを管理するリスト
-    private List<GameObject> pool;
+    public List<GameObject> pool;
     //親オブジェクトを格納しておく
-    private GameObject poolContainer;
+    public GameObject poolContainer;
 
+   
     private void Awake()
     {
         //インスタンス化
         pool = new List<GameObject>();
-        //オブジェクトを生成して名前を付けて変数に格納
-        poolContainer = new GameObject($"Pool - {poolObject.name}");
         //プールオブジェクトの作成
         CreatePooler();
     }
@@ -32,9 +30,9 @@ public class ObjectPooler : MonoBehaviour
         //poolsizeの分ループ
         for (int i = 0; i < poolSize; i++)
         {
-            //生成したオブジェクトをリストに格納
-            pool.Add(CreateObject());
-
+            CreateObject();
+            
+            
         }
     }
 
@@ -45,17 +43,19 @@ public class ObjectPooler : MonoBehaviour
     private GameObject CreateObject()
     {
         //オブジェクトを作成して変数に格納する
-        GameObject newInstance = Instantiate(poolObject);
+        GameObject newInstance = Instantiate(EnemyPrefab);
 
         //親の設定
         newInstance.transform.SetParent(poolContainer.transform);
 
+        pool.Add(newInstance);
 
         //非表示
         newInstance.SetActive(false);
 
         //返す
         return newInstance;
+        
     }
 
     /// <summary>
@@ -64,6 +64,8 @@ public class ObjectPooler : MonoBehaviour
     /// <returns></returns>
     public GameObject GetObjectFromPool()
     {
+
+       
         //リストに格納されている分ループする
         for (int i = 0; i < pool.Count; i++)
         {

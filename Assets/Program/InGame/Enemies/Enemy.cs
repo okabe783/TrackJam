@@ -5,8 +5,7 @@ public class Enemy : MonoBehaviour
     [Header("プレイヤー参照")]
     [SerializeField] private Transform _muzzle;  //発射口
     [SerializeField] private GameObject _bullet;  //弾
-    [SerializeField] private PlayerController _player;  //プレイヤーオブジェクト
-    [SerializeField] ScoreManager _scoreManager;
+    private PlayerController _player;  //プレイヤーオブジェクト
     private Vector3 _playerPos;  //プレイヤーの現在位置
 
     [Header("StatsData参照")]
@@ -21,16 +20,11 @@ public class Enemy : MonoBehaviour
     private int _scoreValue;
     private float _currentSpeed;
 
-    void Awake()
-    {
-        _scoreManager = GetComponent<ScoreManager>();
-    }
-
-    public void Init(PlayerController player,EnemyStutsData stutsData)
+    public void Init(PlayerController player, EnemyStutsData stutsData)
     {
         _player = player;
         _stutsData = stutsData;
-        
+
         _currentHp = _stutsData.MAXHP;
         _currentAtk = _stutsData.ATK;
         _currentSpeed = _stutsData.SPEED;
@@ -49,11 +43,13 @@ public class Enemy : MonoBehaviour
             FacePlayer();
         }
 
+        //索敵範囲外の時
         if (!_isPlayerInRange)
         {
             EnemyMove();
         }
 
+        //typeが遠距離キャラの時＋索敵範囲内の時
         if (_stutsData.enemyType == EnemyStutsData.EnemyType.LongRange
             && _isPlayerInRange
             && _bullet
@@ -68,10 +64,11 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void EnemyMove()
     {
-        _playerPos = _player.transform.position;  //プレイヤーの現在位置を取得
+        _playerPos = _player.gameObject.transform.position;  //プレイヤーの現在位置を取得
+
+        //Vector2.MoveTowards(a, b, maxDistanceDelta) は、「a から b へ maxDistanceDelta 分だけ進む」
         transform.position =
             Vector2.MoveTowards(transform.position, _playerPos, _currentSpeed * Time.deltaTime);
-        //Vector2.MoveTowards(a, b, maxDistanceDelta) は、「a から b へ maxDistanceDelta 分だけ進む」
     }
 
     /// <summary>
@@ -82,10 +79,14 @@ public class Enemy : MonoBehaviour
         if (_fireInterval < _timer)
         {
             Debug.Log("発射");
-            _playerPos = _player.transform.position; // 発射時に最新位置を取得
+            _playerPos = _player.gameObject.transform.position; // 発射時に最新位置を取得
 
             var bullet = Instantiate(_bullet, _muzzle.position, Quaternion.identity);
-            bullet.GetComponent<TargetBullet>().SetDirection(_playerPos);
+            var targetBullet = bullet.GetComponent<TargetBullet>();
+            //方向を渡す
+            targetBullet.SetDirection(_playerPos);
+            //攻撃力を渡す
+            targetBullet.Initialize(_currentAtk);
 
             _timer = 0f;
         }
@@ -96,12 +97,12 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void FacePlayer()
     {
-        Vector3 dir = _player.transform.position - transform.position;
+        Vector3 dir = _player.gameObject.transform.position - transform.position;
 
         transform.localScale = new Vector3(Mathf.Sign(dir.x), 1, 1);
 
         // デバッグ：プレイヤーへのライン
-        Debug.DrawLine(_muzzle.position, _player.transform.position, Color.red);
+        Debug.DrawLine(_muzzle.position, _player.gameObject.transform.position, Color.red);
     }
 
     /// <summary>
@@ -121,13 +122,12 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        _scoreManager.AddScore(_scoreValue);
+        ScoreManager.I.AddScore(_scoreValue);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //PlayerControler playerControler = collision.gameObject.GetComponent<PlayerControler>();
         //playerControler.TakeDamage(_currentAtk);
-
     }
 }

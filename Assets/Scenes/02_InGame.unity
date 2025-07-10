@@ -713,7 +713,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerText: {fileID: 1366900028}
+  _spawner: {fileID: 1461132250}
   _gameTimer: 0
+  _player: {fileID: 1901811803}
+  _selectCharacterData: {fileID: 11400000, guid: 486835c8217add146b025bf936214f8c, type: 2}
+  _statusData:
+  - {fileID: 11400000, guid: 5fabd44554fe86547af9fb8daff8399e, type: 2}
+  - {fileID: 11400000, guid: 8e3f6784e18d0654cbb75e2e79cf5f73, type: 2}
+  - {fileID: 11400000, guid: d056b24d94338bc40a27809072ce87fb, type: 2}
+  - {fileID: 11400000, guid: cf6c2db2708304b4f9e61838b7e07023, type: 2}
   _stopTime: 0
 --- !u!114 &1279033303
 MonoBehaviour:
@@ -856,7 +864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c172815db4ec48b4893af974f74fb8d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1901811803}
   EnemyPrefab: {fileID: 8179017520600557509, guid: a556c5f5249e25e4387068cacb4a2092, type: 3}
   poolSize: 20
   poolContainer: {fileID: 1461132247}
@@ -879,7 +886,13 @@ MonoBehaviour:
   enemyCount: 10
   poolSize: 20
   EnemyPrefab: {fileID: 8179017520600557509, guid: a556c5f5249e25e4387068cacb4a2092, type: 3}
+  _player: {fileID: 1901811803}
+  _enemyStutsList:
+  - {fileID: 11400000, guid: 3a647d9ccbf2e014caa3bdb195daa0b9, type: 2}
+  - {fileID: 11400000, guid: 96a31b5924539854c82c2864ac55b028, type: 2}
+  - {fileID: 11400000, guid: 55bbf23fad680e44db344f9fc7719fcf, type: 2}
   spawnTimer: 1
+  _isSpawn: 0
   spawned: 1
 --- !u!1 &1748214537
 GameObject:

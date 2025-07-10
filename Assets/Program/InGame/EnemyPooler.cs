@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-    [SerializeField] private PlayerController _player;
     [SerializeField] public GameObject EnemyPrefab;
     //生成する数
     [SerializeField] public int poolSize = 20;
@@ -41,19 +40,14 @@ public class ObjectPooler : MonoBehaviour
     {
         //オブジェクトを作成して変数に格納する
         GameObject newInstance = Instantiate(EnemyPrefab);
-        newInstance.GetComponent<Enemy>().Init(_player);
-
+        
         //親の設定
         newInstance.transform.SetParent(poolContainer.transform);
-
-        pool.Add(newInstance);
-
         //非表示
         newInstance.SetActive(false);
-
+        pool.Add(newInstance);
         //返す
         return newInstance;
-        
     }
 
     /// <summary>
@@ -62,8 +56,6 @@ public class ObjectPooler : MonoBehaviour
     /// <returns></returns>
     public GameObject GetObjectFromPool()
     {
-
-       
         //リストに格納されている分ループする
         for (int i = 0; i < pool.Count; i++)
         {
@@ -72,11 +64,8 @@ public class ObjectPooler : MonoBehaviour
             {
                 //呼び出した場所に返す
                 return pool[i];
-
             }
-
         }
-
         //足りなければ生成して返す
         return CreateObject();
 

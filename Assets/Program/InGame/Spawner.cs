@@ -8,30 +8,33 @@ public enum Spawnmodes
 {
     constant,//一定間隔でスポーンする
     Random,//ランダムにスポーンする
-
 }
 
 public class Spawner : MonoBehaviour
 {
-
     //スポーンモードの選択
     [SerializeField] private Spawnmodes spawnModes = Spawnmodes.constant;
     //最短のスポーン間隔
-    [SerializeField] public float minRandomDelay;
+    [SerializeField] private float minRandomDelay;
     //最長のスポーン間隔
-    [SerializeField] public float maxRandomDelay;
+    [SerializeField] private float maxRandomDelay;
     //一定モードのスポーン時間
-    [SerializeField] public float constantSpawnTime;
+    [SerializeField] private float constantSpawnTime;
     //スポーンさせる数を設定する
-    [SerializeField] public int enemyCount = 10;
-
-    [SerializeField] public int poolSize = 20;
-
-    [SerializeField]public GameObject EnemyPrefab;        // 敵プレハブ（Enemy）
-
+    [SerializeField] private int enemyCount = 10;
+    [SerializeField] private int poolSize = 20;
+    // 敵プレハブ（Enemy）
+    [SerializeField]public GameObject EnemyPrefab;
+    
+    // シーンにあるPlayerObj
+    [SerializeField] private PlayerController _player;
+    // EnemyのData
+    [SerializeField] private List<EnemyStutsData> _enemyStutsList;
     
     //タイマー変数
     public float spawnTimer;
+    // Spawn可能かどうか
+    public bool _isSpawn;
     //スポーンさせた数（数を追加していく）
     public float spawned;
     //enemyのオブジェクトプール用
@@ -42,12 +45,14 @@ public class Spawner : MonoBehaviour
     {
         //変数にコンポーネントを格納する
         pooler = GetComponent<ObjectPooler>();
-
-        
+        _isSpawn = false;
     }
 
     private void Update()
     {
+        if(!_isSpawn)
+            return;
+        
         //spawnタイマーの時間を減らす
         spawnTimer -= Time.deltaTime;
         //確認
@@ -75,7 +80,12 @@ public class Spawner : MonoBehaviour
     private void SpawnEnemy()
     {
         //プールから取得して変数に格納
-        GameObject newInstance = pooler.GetObjectFromPool();   
+        GameObject newInstance = pooler.GetObjectFromPool();
+        var stutsData = _enemyStutsList[UnityEngine.Random.Range(0, _enemyStutsList.Count)];
+        
+        Enemy enemy = newInstance.GetComponent<Enemy>();
+        enemy.Init(_player,stutsData);
+        
         //エネミーの初期設定
         SetEnemy(newInstance);
         //表示する
@@ -89,8 +99,6 @@ public class Spawner : MonoBehaviour
        
         //生成位置をこのオブジェクトの位置に設定
         enemy.transform.position = transform.position;
-        
-
     }
 
     /// <summary>

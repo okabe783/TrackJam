@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // スタックメモリ
-    [SerializeField] StatusData _statusData;
+    public StatusData _statusData;
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
 

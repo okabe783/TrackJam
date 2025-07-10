@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
@@ -30,6 +31,10 @@ public class Boss : MonoBehaviour
     [Header("StatsData参照")]
     [SerializeField] EnemyStutsData _stutsData;  //敵別ステータスの設定
 
+    [Header("突進設定")]
+    [SerializeField] private float _rushSpeed = 5f;
+    [SerializeField] private float _rushInterval = 3f;
+
     private float _fireInterval;
     private int _power;
 
@@ -37,10 +42,16 @@ public class Boss : MonoBehaviour
     private float _fireTimer;
     private float _allRangefireTimer;
     private bool _isFiringAllDirection;
+
+    Rigidbody2D _bossRb;
+    private float _rushIntervalTimer;
+
+
     void Start()
     {
         _fireInterval = _stutsData.FireInterval;
         _power = _stutsData.ATK;
+        _bossRb = GetComponent<Rigidbody2D>();
     }
 
     //public void Init(Player player)
@@ -53,6 +64,7 @@ public class Boss : MonoBehaviour
         _teleportTimer += Time.deltaTime;
         _fireTimer += Time.deltaTime;
         _allRangefireTimer += Time.deltaTime;
+        _rushIntervalTimer += Time.deltaTime;
 
 
         if (_teleportInterval < _teleportTimer)
@@ -72,6 +84,11 @@ public class Boss : MonoBehaviour
             AllRangeFired();
         }
 
+        if (_rushIntervalTimer > _rushInterval)
+        {
+            Rush();
+
+        }
     }
 
     /// <summary>
@@ -106,6 +123,19 @@ public class Boss : MonoBehaviour
             enemyBullet.Initialize(_power);
             _fireTimer = 0f;
         }
+    }
+
+    private void Rush()
+    {
+        var targetPosition = _player.transform.position;
+
+        Vector2 direction = new Vector2((targetPosition.x - transform.position.x),
+                                        (targetPosition.y - transform.position.y)).normalized;
+
+        _bossRb.AddForce(direction * _rushSpeed, ForceMode2D.Impulse);
+
+        _rushIntervalTimer = 0f;
+
     }
 
     /// <summary>
@@ -155,7 +185,7 @@ public class Boss : MonoBehaviour
 
             yield return new WaitForSeconds(_fireAllDirectionInterval);
         }
-        
+
         //muzzleの位置と角度を初期化
         _muzzleTransform.position = initMuzzlePosion;
         _muzzleTransform.rotation = initMuzzleRotation;

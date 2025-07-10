@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _muzzle;  //発射口
     [SerializeField] private GameObject _bullet;  //弾
     [SerializeField] private PlayerController _player;  //プレイヤーオブジェクト
+    [SerializeField] ScoreManager _scoreManager;
     private Vector3 _playerPos;  //プレイヤーの現在位置
 
     [Header("StatsData参照")]
@@ -17,12 +18,17 @@ public class Enemy : MonoBehaviour
     public int _currentAtk;
     private float _fireInterval;
     private float _timer;
+    private int _scoreValue;
 
     void Awake()
     {
+        _scoreManager = GetComponent<ScoreManager>();
+
         _currentHp = _stutsData.MAXHP;
         _currentAtk = _stutsData.ATK;
         _fireInterval = _stutsData.FireInterval;
+        _scoreValue = _stutsData.SCORE;
+        
     }
 
     public void Init(PlayerController player)
@@ -113,7 +119,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        //AddScore();
+        _scoreManager.AddScore(_scoreValue);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -12,6 +12,7 @@ public class EnemyStutsData : ScriptableObject
     public float NockBack; //のけぞり
     public float SPAN; //間隔
     public int EXP; //経験値
+    public int SCORE;  //加算するスコア
 
     [Header("敵のタイプ")]
     public EnemyType enemyType;

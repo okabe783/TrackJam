@@ -42,7 +42,7 @@ public class EnemyTimer : MonoBehaviour
     void EnemyUptime()
     {
         _weveup1 = true;
-       _spawner.maxRandomDelay = _firstweve;
+       //_spawner.maxRandomDelay = _firstweve;
         Debug.Log("kk");
         
     }

@@ -431,6 +431,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 592972813909366865, guid: 816556fbad2179a449b5dd32983ac844, type: 3}
+      propertyPath: _startButton
+      value: 
+      objectReference: {fileID: 495693182}
+    - target: {fileID: 592972813909366865, guid: 816556fbad2179a449b5dd32983ac844, type: 3}
       propertyPath: _characterImage
       value: 
       objectReference: {fileID: 2014646137}
@@ -446,6 +450,10 @@ PrefabInstance:
       propertyPath: _startPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 592972813909366865, guid: 816556fbad2179a449b5dd32983ac844, type: 3}
+      propertyPath: _selectCharacterData
+      value: 
+      objectReference: {fileID: 11400000, guid: 486835c8217add146b025bf936214f8c, type: 2}
     - target: {fileID: 592972813909366865, guid: 816556fbad2179a449b5dd32983ac844, type: 3}
       propertyPath: _characterSelectButton
       value: 
@@ -592,17 +600,33 @@ PrefabInstance:
       value: CharacterSelectCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 3007904586999559257, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: _characterSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8260fa3e4fbaa204d8ba008dd62c4b27, type: 3}
+    - target: {fileID: 3007904586999559257, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: _characterSelectManager
       value: 
       objectReference: {fileID: 684694687}
+    - target: {fileID: 4596261813773760649, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: _characterSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8260fa3e4fbaa204d8ba008dd62c4b27, type: 3}
     - target: {fileID: 4596261813773760649, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: _characterSelectManager
       value: 
       objectReference: {fileID: 684694687}
     - target: {fileID: 8548093794412426734, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: _characterSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6add616ada32f074fae55b976dd4886f, type: 3}
+    - target: {fileID: 8548093794412426734, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: _characterSelectManager
       value: 
       objectReference: {fileID: 684694687}
+    - target: {fileID: 8617136195420971699, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: _characterSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6add616ada32f074fae55b976dd4886f, type: 3}
     - target: {fileID: 8617136195420971699, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: _characterSelectManager
       value: 

@@ -23,17 +23,17 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         _scoreManager = GetComponent<ScoreManager>();
+    }
 
+    public void Init(PlayerController player,EnemyStutsData stutsData)
+    {
+        _player = player;
+        _stutsData = stutsData;
+        
         _currentHp = _stutsData.MAXHP;
         _currentAtk = _stutsData.ATK;
         _fireInterval = _stutsData.FireInterval;
         _scoreValue = _stutsData.SCORE;
-        
-    }
-
-    public void Init(PlayerController player)
-    {
-        _player = player;
     }
 
     void Update()

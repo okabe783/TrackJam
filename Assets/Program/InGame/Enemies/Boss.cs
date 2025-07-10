@@ -37,6 +37,7 @@ public class Boss : MonoBehaviour
 
     private float _fireInterval;
     private int _power;
+    private float _currentSpeed;
 
     private float _teleportTimer;
     private float _fireTimer;
@@ -51,6 +52,7 @@ public class Boss : MonoBehaviour
     {
         _fireInterval = _stutsData.FireInterval;
         _power = _stutsData.ATK;
+        _currentSpeed = _stutsData.SPEED;
         _bossRb = GetComponent<Rigidbody2D>();
     }
 
@@ -66,6 +68,7 @@ public class Boss : MonoBehaviour
         _allRangefireTimer += Time.deltaTime;
         _rushIntervalTimer += Time.deltaTime;
 
+        BossMove();
 
         if (_teleportInterval < _teleportTimer)
         {
@@ -87,8 +90,15 @@ public class Boss : MonoBehaviour
         if (_rushIntervalTimer > _rushInterval)
         {
             Rush();
-
         }
+    }
+
+    private void BossMove()
+    {
+        _playerPos = _player.transform.position;  //プレイヤーの現在位置を取得
+        transform.position =
+            Vector2.MoveTowards(transform.position, _playerPos, _currentSpeed * Time.deltaTime);
+        //Vector2.MoveTowards(a, b, maxDistanceDelta) は、「a から b へ maxDistanceDelta 分だけ進む」
     }
 
     /// <summary>

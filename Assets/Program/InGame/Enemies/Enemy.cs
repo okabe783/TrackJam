@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     private float _fireInterval;
     private float _timer;
     private int _scoreValue;
+    private float _currentSpeed;
 
     void Awake()
     {
@@ -32,6 +33,7 @@ public class Enemy : MonoBehaviour
         
         _currentHp = _stutsData.MAXHP;
         _currentAtk = _stutsData.ATK;
+        _currentSpeed = _stutsData.SPEED;
         _fireInterval = _stutsData.FireInterval;
         _scoreValue = _stutsData.SCORE;
     }
@@ -68,7 +70,7 @@ public class Enemy : MonoBehaviour
     {
         _playerPos = _player.transform.position;  //プレイヤーの現在位置を取得
         transform.position =
-            Vector2.MoveTowards(transform.position, _playerPos, _stutsData.SPEED * Time.deltaTime);
+            Vector2.MoveTowards(transform.position, _playerPos, _currentSpeed * Time.deltaTime);
         //Vector2.MoveTowards(a, b, maxDistanceDelta) は、「a から b へ maxDistanceDelta 分だけ進む」
     }
 

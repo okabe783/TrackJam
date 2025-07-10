@@ -11,8 +11,8 @@ public class EnemyTimer : MonoBehaviour
     [SerializeField] float _gametimer = 15f;
     [SerializeField,Header("ファーストの敵の変化時間")] float _firstweve = 10;
     [SerializeField] float _secondweve = 20;  //2回目のウェーブ変化
-    
     Spawner _spawner;
+    bool _weveup1=false;
 
 
 
@@ -27,22 +27,24 @@ public class EnemyTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_gametimer < 0)
+        if (_gametimer > 0)
         {
             _gametimer -= Time.deltaTime;
-            BossSupon();
 
         }
-        if (_gametimer ==_firstweve)
+        if (_gametimer <_firstweve&&_weveup1==false)
         {
             EnemyUptime();
-
+            
         }
 
     }
     void EnemyUptime()
     {
-        //maxRandomDelay += 15;//せなのパブリック待ち
+        _weveup1 = true;
+       _spawner.maxRandomDelay = _firstweve;
+        Debug.Log("kk");
+        
     }
     void BossSupon()
     {

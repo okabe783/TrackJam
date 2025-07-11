@@ -9,6 +9,7 @@ public class Boss : MonoBehaviour
     [SerializeField] private Transform _muzzle;  //発射口
     [SerializeField] private GameObject _bullet;  //弾
     [SerializeField] private GameObject _straightBullet;
+    [SerializeField] PlayerLevelManager _playerLevelManager;
     private PlayerController _player;
     private Vector3 _playerPos;
 
@@ -29,11 +30,14 @@ public class Boss : MonoBehaviour
     [SerializeField] int _bulletCount = 6;  //弾の数(360を割る数）
 
     [Header("StatsData参照")]
-    [SerializeField] EnemyStutsData _stutsData;  //敵別ステータスの設定
+    EnemyStutsData _stutsData;  //敵別ステータスの設定
 
     [Header("突進設定")]
     [SerializeField] private float _rushSpeed = 5f;  //突進速度
     [SerializeField] private float _rushInterval = 3f;  //突進のインターバル
+
+    [Header("ノックバック力")]
+    [SerializeField] private float _knockBackForce = 5f;
 
     private float _teleportTimer;
     private float _fireTimer;
@@ -48,6 +52,7 @@ public class Boss : MonoBehaviour
     private int _scoreValue;
     private float _fireInterval;
     private float _currentSpeed;
+    private float _expGain;
 
 
     void Awake()
@@ -65,6 +70,7 @@ public class Boss : MonoBehaviour
         _currentSpeed = _stutsData.SPEED;
         _fireInterval = _stutsData.FireInterval;
         _scoreValue = _stutsData.SCORE;
+        _expGain = _stutsData.EXP;
     }
 
     void Update()
@@ -240,6 +246,14 @@ public class Boss : MonoBehaviour
         _isFiringAllDirection = false;
     }
 
+
+    private void KnockBackBoss()
+    {
+        Vector2 knockBackDirection = transform.position - _player.gameObject.transform.position;
+
+        _bossRb.AddForce(knockBackDirection * _knockBackForce, ForceMode2D.Impulse);
+
+    }
     /// <summary>
     /// ダメージを受ける処理
     /// </summary>
@@ -261,5 +275,24 @@ public class Boss : MonoBehaviour
     private void Die()
     {
         ScoreManager.I.AddScore(_scoreValue);
+
+        if (_playerLevelManager != null)
+        {
+            _playerLevelManager.AddExperience(_expGain);
+            Debug.Log($"[Enemy] プレイヤーに経験値 {_expGain} を付与！");
+        }
+
+        gameObject.SetActive(false);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //PlayerControler playerControler = collision.gameObject.GetComponent<PlayerControler>();
+            //playerControler.TakeDamage(_currentAtk);
+
+            KnockBackBoss();
+        }
     }
 }

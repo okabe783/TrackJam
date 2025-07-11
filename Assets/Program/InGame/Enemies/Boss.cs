@@ -8,8 +8,8 @@ public class Boss : MonoBehaviour
     [Header("プレイヤー参照")]
     [SerializeField] private Transform _muzzle;  //発射口
     [SerializeField] private GameObject _bullet;  //弾
-    [SerializeField] private GameObject _player;  //プレイヤーオブジェクト
     [SerializeField] private GameObject _straightBullet;
+    private PlayerController _player;
     private Vector3 _playerPos;
 
 
@@ -32,11 +32,8 @@ public class Boss : MonoBehaviour
     [SerializeField] EnemyStutsData _stutsData;  //敵別ステータスの設定
 
     [Header("突進設定")]
-    [SerializeField] private float _rushSpeed = 5f;
-    [SerializeField] private float _rushInterval = 3f;
-
-    private float _fireInterval;
-    private int _power;
+    [SerializeField] private float _rushSpeed = 5f;  //突進速度
+    [SerializeField] private float _rushInterval = 3f;  //突進のインターバル
 
     private float _teleportTimer;
     private float _fireTimer;
@@ -46,18 +43,29 @@ public class Boss : MonoBehaviour
     Rigidbody2D _bossRb;
     private float _rushIntervalTimer;
 
+    private int _currentHp;
+    private int _currentAtk;
+    private int _scoreValue;
+    private float _fireInterval;
+    private float _currentSpeed;
 
-    void Start()
+
+    void Awake()
     {
-        _fireInterval = _stutsData.FireInterval;
-        _power = _stutsData.ATK;
         _bossRb = GetComponent<Rigidbody2D>();
     }
 
-    //public void Init(Player player)
-    //{
-    //    _player = player;
-    //}
+    public void Init(PlayerController player, EnemyStutsData stutsData)
+    {
+        _player = player;
+        _stutsData = stutsData;
+
+        _currentHp = _stutsData.MAXHP;
+        _currentAtk = _stutsData.ATK;
+        _currentSpeed = _stutsData.SPEED;
+        _fireInterval = _stutsData.FireInterval;
+        _scoreValue = _stutsData.SCORE;
+    }
 
     void Update()
     {
@@ -66,12 +74,27 @@ public class Boss : MonoBehaviour
         _allRangefireTimer += Time.deltaTime;
         _rushIntervalTimer += Time.deltaTime;
 
+        //敵のタイプが1体目のボスの時
+        if (_rushIntervalTimer > _rushInterval
+            && _stutsData.enemyType == EnemyStutsData.EnemyType.FirstBoss)
+        {
+            Rush();
+        }
 
-        if (_teleportInterval < _teleportTimer)
+        //敵のタイプが2体目のボスの時
+        if (_stutsData.enemyType == EnemyStutsData.EnemyType.SecondBoss)
+        {
+            BossMove();
+        }
+
+        //敵のタイプがラスボスの時
+        if (_teleportInterval < _teleportTimer
+            && _stutsData.enemyType == EnemyStutsData.EnemyType.LastBoss)
         {
             Teleport();
         }
 
+        //敵のタイプがラスボスの時＋nullチェック
         if (_stutsData.enemyType == EnemyStutsData.EnemyType.LastBoss
          && _bullet
          && _muzzle)
@@ -79,16 +102,24 @@ public class Boss : MonoBehaviour
             BossFired();
         }
 
-        if (_allRangefireTimer > _allRangefireInterval)
+        //敵のタイプが2体目のボスかラスボスの時
+        if (_stutsData.enemyType == EnemyStutsData.EnemyType.SecondBoss
+            || _stutsData.enemyType == EnemyStutsData.EnemyType.LastBoss)
         {
-            AllRangeFired();
+            if (_allRangefireTimer > _allRangefireInterval)
+            {
+                AllRangeFired();
+            }
         }
+    }
 
-        if (_rushIntervalTimer > _rushInterval)
-        {
-            Rush();
+    private void BossMove()
+    {
+        _playerPos = _player.gameObject.transform.position;  //プレイヤーの現在位置を取得
 
-        }
+        //Vector2.MoveTowards(a, b, maxDistanceDelta) は、「a から b へ maxDistanceDelta 分だけ進む」
+        transform.position =
+            Vector2.MoveTowards(transform.position, _playerPos, _currentSpeed * Time.deltaTime);
     }
 
     /// <summary>
@@ -96,12 +127,17 @@ public class Boss : MonoBehaviour
     /// </summary>
     private void Teleport()
     {
+        //テレポートさせる角度をランダム化
         _teleportTheta = Random.Range(0, 360);
+        //プレイヤーからの距離をランダム化
         float teleportDistance = Random.Range(_teleportMinDistance, _teleportMaxDistance);
 
+        //座標をsin,cosでr(距離)を取ってくる
         _teleportPosition.x = teleportDistance * Mathf.Cos(_teleportTheta) + _player.transform.position.x;
         _teleportPosition.y = teleportDistance * Mathf.Sin(_teleportTheta) + _player.transform.position.y;
         _teleportPosition.z = 0;
+
+        //とってきた座標にテレポート
         this.transform.position = _teleportPosition;
 
         _teleportTimer = 0;
@@ -115,20 +151,25 @@ public class Boss : MonoBehaviour
         if (_fireInterval < _fireTimer)
         {
             Debug.Log("発射");
-            _playerPos = _player.transform.position; // 発射時に最新位置を取得
+            // 発射時に最新位置を取得
+            _playerPos = _player.gameObject.transform.position;
 
             var bullet = Instantiate(_bullet, _muzzle.position, Quaternion.identity);
-            var enemyBullet = bullet.GetComponent<TargetBullet>();
-            enemyBullet.SetDirection(_playerPos);
-            enemyBullet.Initialize(_power);
+            var targetBullet = bullet.GetComponent<TargetBullet>();
+            //方向を渡す
+            targetBullet.SetDirection(_playerPos);
+            //攻撃力を渡す
+            targetBullet.Initialize(_currentAtk);
             _fireTimer = 0f;
         }
     }
 
     private void Rush()
     {
-        var targetPosition = _player.transform.position;
+        //プレイヤーの最新位置を取得
+        var targetPosition = _player.gameObject.transform.position;
 
+        //方向をベクトルでとってくる
         Vector2 direction = new Vector2((targetPosition.x - transform.position.x),
                                         (targetPosition.y - transform.position.y)).normalized;
 
@@ -164,6 +205,7 @@ public class Boss : MonoBehaviour
         Quaternion initMuzzleRotation = _muzzleTransform.rotation;
         Debug.Log("addAngleは" + addAngle);
 
+        //currentAngleに初期角度を渡し、回す角度を一周するまで
         for (float currentAngle = initAngle;
             currentAngle < initAngle + fullRotation;
             currentAngle += addAngle)
@@ -181,7 +223,11 @@ public class Boss : MonoBehaviour
             // Z軸を回転（クォータニオンで角度を指定）
             _muzzleTransform.rotation = Quaternion.Euler(0f, 0f, currentAngle);
 
-            Instantiate(_straightBullet, _muzzleTransform.position, _muzzleTransform.rotation);
+            var bullet = Instantiate(_straightBullet, _muzzleTransform.position, _muzzleTransform.rotation);
+            var straightBullet = GetComponent<StraightBullet>();
+            //攻撃力を渡す
+            straightBullet.Initialize(_currentAtk);
+
 
             yield return new WaitForSeconds(_fireAllDirectionInterval);
         }
@@ -192,5 +238,28 @@ public class Boss : MonoBehaviour
 
         _allRangefireTimer = 0f;
         _isFiringAllDirection = false;
+    }
+
+    /// <summary>
+    /// ダメージを受ける処理
+    /// </summary>
+    /// <param name="damage"></param>
+    public void TakeDamage(int damage)
+    {
+        _currentHp -= damage;
+
+        //0以下になったら死亡
+        if (_currentHp <= 0)
+        {
+            Die();
+        }
+    }
+
+    /// <summary>
+    /// 死亡したときの処理
+    /// </summary>
+    private void Die()
+    {
+        ScoreManager.I.AddScore(_scoreValue);
     }
 }

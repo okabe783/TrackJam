@@ -18,6 +18,10 @@ public class TargetBullet : MonoBehaviour
         Fire();
     }
 
+    /// <summary>
+    /// 方向指定
+    /// </summary>
+    /// <param name="targetPosition"></param>
     public void SetDirection(Vector2 targetPosition)
     {
         _direction = new Vector2((targetPosition.x - transform.position.x),
@@ -25,6 +29,9 @@ public class TargetBullet : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// 発射
+    /// </summary>
     private void Fire()
     {
         transform.Translate(_direction * _bulletSpeed);

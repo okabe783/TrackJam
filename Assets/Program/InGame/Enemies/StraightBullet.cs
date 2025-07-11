@@ -6,9 +6,15 @@ public class StraightBullet : MonoBehaviour
 {
     [SerializeField] private float _bulletSpeed;
 
+    private int _power;
     Rigidbody2D _rb;
 
-    private void Update()
+    public void Initialize(int power)
+    {
+        _power = power;
+    }
+
+    void Update()
     {
         BulletMove();
     }

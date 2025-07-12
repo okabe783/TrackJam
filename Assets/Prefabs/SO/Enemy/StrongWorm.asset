@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 594471ead734d5f439102af8d9c9af45, type: 3}
-  m_Name: Slime
+  m_Name: StrongWorm
   m_EditorClassIdentifier: 
-  MAXHP: 4
-  ATK: 3
-  SPEED: 1
-  KnockBack: 2
-  EXP: 2
-  SCORE: 2
+  MAXHP: 10
+  ATK: 6
+  SPEED: 6
+  KnockBack: 4
+  EXP: 20
+  SCORE: 20
   enemyType: 0
   ATTACKRANGE: 1
   ATTACKINTERVAL: 2

@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594471ead734d5f439102af8d9c9af45, type: 3}
   m_Name: Alien
   m_EditorClassIdentifier: 
-  MAXHP: 2
-  ATK: 4
+  MAXHP: 6
+  ATK: 5
   SPEED: 3
-  NockBack: 3
-  SPAN: 2
-  EXP: 2
-  enemyType: 1
-  FireInterval: 2
+  KnockBack: 4
+  EXP: 5
+  SCORE: 5
+  enemyType: 0
+  ATTACKRANGE: 3
+  ATTACKINTERVAL: 2
+  FireInterval: 0
+  _RUSHSPEED: 0
+  RUSHINTERVAL: 0

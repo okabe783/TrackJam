@@ -1,24 +1,45 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
     [Header("プレイヤー参照")]
     [SerializeField] private Transform _muzzle;  //発射口
     [SerializeField] private GameObject _bullet;  //弾
+    private PlayerLevelManager _playerLevelManager;
     private PlayerController _player;  //プレイヤーオブジェクト
     private Vector3 _playerPos;  //プレイヤーの現在位置
 
     [Header("StatsData参照")]
-    [SerializeField] EnemyStutsData _stutsData;  //敵別ステータスの設定
+    EnemyStutsData _stutsData;  //敵別ステータスの設定
+
+    [Header("ノックバック力")]
+    [SerializeField] private float _knockBackForce = 5f;
+
+    [Header("デバッグ用")]
+    public EnemyStutsData _debugData;
+    public PlayerController _debugPlayer;
+    public PlayerLevelManager _debugLevel;
 
     [HideInInspector] public bool _isPlayerInRange;
+    [HideInInspector] public bool _isHit;
 
     private int _currentHp;
     public int _currentAtk;
     private float _fireInterval;
-    private float _timer;
     private int _scoreValue;
     private float _currentSpeed;
+    private float _expGain;
+    private float _attackRange;
+    private float _attackInterval;
+
+    private float _timer;
+    private float _attackTimer;
+
+
+    Rigidbody2D _rb;
 
     public void Init(PlayerController player, EnemyStutsData stutsData)
     {
@@ -30,32 +51,63 @@ public class Enemy : MonoBehaviour
         _currentSpeed = _stutsData.SPEED;
         _fireInterval = _stutsData.FireInterval;
         _scoreValue = _stutsData.SCORE;
+        _expGain = _stutsData.EXP;
+        _knockBackForce = _stutsData.KnockBack;
+        _attackRange = _stutsData.ATTACKRANGE;
+        _attackInterval = _stutsData.ATTACKINTERVAL;
+    }
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        if (_player == null) return;
-
         _timer += Time.deltaTime;
+
+        if (_stutsData == null)
+        {
+            _stutsData = _debugData;
+            _currentSpeed = _stutsData.SPEED;
+            _attackRange = _stutsData.ATTACKRANGE;
+            _attackInterval = _stutsData.ATTACKINTERVAL;
+        }
+
+        if (_player == null)
+        {
+            _player = _debugPlayer;
+        }
+
+        if (_playerLevelManager == null)
+        {
+            _playerLevelManager = _debugLevel;
+        }
 
         if (_muzzle)
         {
             FacePlayer();
         }
 
-        //索敵範囲外の時
-        if (!_isPlayerInRange)
+
+        if (_stutsData.enemyType == EnemyStutsData.EnemyType.LongRange
+        && _isPlayerInRange
+        && _bullet
+        && _muzzle)
         {
-            EnemyMove();
+            if (_isPlayerInRange)
+            {
+                EnemyFired();
+            }
+            else
+            {
+                EnemyMove();
+            }
         }
 
-        //typeが遠距離キャラの時＋索敵範囲内の時
-        if (_stutsData.enemyType == EnemyStutsData.EnemyType.LongRange
-            && _isPlayerInRange
-            && _bullet
-            && _muzzle)
+        if (_stutsData.enemyType == EnemyStutsData.EnemyType.ShortRange)
         {
-            EnemyFired();
+            ShortRangeAttack();
         }
     }
 
@@ -92,6 +144,40 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void ShortRangeAttack()
+    {
+        _playerPos = _player.gameObject.transform.position;
+        //自分と相手の距離を取得
+        float distance = Vector2.Distance(transform.position, _playerPos);
+
+        if (distance > _attackRange)
+        {
+            EnemyMove();
+        }
+        else
+        {
+            _attackTimer += Time.deltaTime;  //振りかぶるモーション等攻撃を避ける時間
+            if (_attackTimer >= _attackInterval)
+            {
+                _attackTimer = 0f;
+                Attack();
+            }
+        }
+
+    }
+
+    private void Attack()
+    {
+        if (_player == null) return;
+
+        Debug.Log("近距離攻撃！");
+
+        //_player.TakeDamage(_currentAtk);
+
+        // ノックバックも入れる場合
+        KnockBack();
+    }
+
     /// <summary>
     /// 敵の向きや銃口進んでいる向きに変える
     /// </summary>
@@ -120,28 +206,33 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void KnockBack()
+    {
+        Vector2 knockBackDirection = transform.position - _player.gameObject.transform.position;
+
+        _rb.AddForce(knockBackDirection * _knockBackForce, ForceMode2D.Impulse);
+
+    }
+
     private void Die()
     {
         ScoreManager.I.AddScore(_scoreValue);
-        
-        /// <summary>
-        // 経験値オーブを落とす
-        ExpDropper dropper = GetComponent<ExpDropper>();
-        if (dropper != null)
-        {
-            dropper.DropExpOrbs();
-        }
-        /// <summary>
 
-        Destroy(gameObject);
+        if (_playerLevelManager != null)
+        {
+            _playerLevelManager.AddExperience(_expGain);
+            Debug.Log($"[Enemy] プレイヤーに経験値 {_expGain} を付与！");
+        }
 
         gameObject.SetActive(false);
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //PlayerControler playerControler = collision.gameObject.GetComponent<PlayerControler>();
-        //playerControler.TakeDamage(_currentAtk);
+        if (collision.gameObject.CompareTag("Player") &&
+            _stutsData.enemyType == EnemyStutsData.EnemyType.LongRange)
+        {
+            KnockBack();
+        }
     }
 }

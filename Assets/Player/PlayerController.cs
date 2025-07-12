@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Anim()
     {
-        animator.SetBool("RightAnimation", _moveInput.x != 0.0f);
+        animator.SetBool("RightAnimation", _moveInput.magnitude != 0.0f);
     }
 
     private void Attack()

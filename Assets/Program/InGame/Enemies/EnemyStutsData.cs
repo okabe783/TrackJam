@@ -9,16 +9,23 @@ public class EnemyStutsData : ScriptableObject
     public int MAXHP; //最大HP
     public int ATK; //攻撃力　
     public float SPEED; //移動速度
-    public float NockBack; //のけぞり
-    public float SPAN; //間隔
+    public float KnockBack; //のけぞり
     public int EXP; //経験値
     public int SCORE;  //加算するスコア
 
     [Header("敵のタイプ")]
     public EnemyType enemyType;
 
+    [Header("ShortRange設定")]
+    public float ATTACKRANGE;
+    public float ATTACKINTERVAL;
+
     [Header("LongRange設定")]
     public float FireInterval;
+
+    [Header("突進設定")]
+    public float _RUSHSPEED;  //突進速度
+    public float RUSHINTERVAL;  //突進のインターバル
 
     public enum EnemyType
     {

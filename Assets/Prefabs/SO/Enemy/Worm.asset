@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 594471ead734d5f439102af8d9c9af45, type: 3}
-  m_Name: Boss
+  m_Name: Worm
   m_EditorClassIdentifier: 
-  MAXHP: 2
-  ATK: 5
-  SPEED: 3
-  NockBack: 3
-  SPAN: 2
-  EXP: 2
-  enemyType: 4
-  FireInterval: 2
+  MAXHP: 5
+  ATK: 3
+  SPEED: 6
+  KnockBack: 4
+  EXP: 4
+  SCORE: 4
+  enemyType: 0
+  ATTACKRANGE: 1
+  ATTACKINTERVAL: 2
+  FireInterval: 0
+  _RUSHSPEED: 0
+  RUSHINTERVAL: 0

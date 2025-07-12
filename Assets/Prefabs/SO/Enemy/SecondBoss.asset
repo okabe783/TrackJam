@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 594471ead734d5f439102af8d9c9af45, type: 3}
-  m_Name: Slime
+  m_Name: SecondBoss
   m_EditorClassIdentifier: 
-  MAXHP: 4
-  ATK: 3
-  SPEED: 1
-  KnockBack: 2
-  EXP: 2
-  SCORE: 2
-  enemyType: 0
-  ATTACKRANGE: 1
+  MAXHP: 100
+  ATK: 12
+  SPEED: 2
+  KnockBack: 3
+  EXP: 250
+  SCORE: 250
+  enemyType: 3
+  ATTACKRANGE: 3
   ATTACKINTERVAL: 2
-  FireInterval: 0
-  _RUSHSPEED: 0
-  RUSHINTERVAL: 0
+  FireInterval: 3
+  _RUSHSPEED: 5
+  RUSHINTERVAL: 3

@@ -216,13 +216,16 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        ScoreManager.I.AddScore(_scoreValue);
-
-        if (_playerLevelManager != null)
+        /// <summary>
+        // 経験値オーブを落とす
+        ExpDropper dropper = GetComponent<ExpDropper>();
+        if (dropper != null)
         {
-            _playerLevelManager.AddExperience(_expGain);
-            Debug.Log($"[Enemy] プレイヤーに経験値 {_expGain} を付与！");
+            dropper.DropExpOrbs();
         }
+        /// <summary>
+
+        ScoreManager.I.AddScore(_scoreValue);
 
         gameObject.SetActive(false);
     }

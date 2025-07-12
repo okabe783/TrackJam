@@ -120,10 +120,10 @@ public class PlayerController : MonoBehaviour
         //_currentHp -= damage;
         Debug.Log($"[Player] ダメージ: {damage} / HP: {_currentHp}");
 
-        // if (_currentHp <= 0)
-        // {
-        //     Die();
-        // }
+        if (_currentHp <= 0)
+        {
+             Die();
+        }
     }
 
     void Die()

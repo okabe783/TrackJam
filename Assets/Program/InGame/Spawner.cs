@@ -34,6 +34,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private List<EnemyStutsData> _enemyStutsList;
     [SerializeField] private PlayerLevelManager _playerLevelManager;
     
+    [SerializeField] private GameManager _gameManager;
+    
     //タイマー変数
     public float spawnTimer;
     // Spawn可能かどうか
@@ -58,6 +60,10 @@ public class Spawner : MonoBehaviour
         
         //spawnタイマーの時間を減らす
         spawnTimer -= Time.deltaTime;
+
+        // 経過時間に応じて敵を増やす
+        UpdateSpawnCountPerWave();
+        
         //確認
         if (spawnTimer < 0)
         {
@@ -95,6 +101,14 @@ public class Spawner : MonoBehaviour
         SetEnemy(newInstance);
         //表示する
         newInstance.SetActive(true);
+    }
+
+    private void UpdateSpawnCountPerWave()
+    {
+        float gameTime = _gameManager.GameTime;
+        
+        // 30秒ごとにスポーン数+1（最大10体まで）
+        _spawnCountPerWave = Mathf.Clamp(3 + Mathf.FloorToInt(gameTime / 30f), 3, 10);
     }
 
     private void SetEnemy(GameObject newInstance)

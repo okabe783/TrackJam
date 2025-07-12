@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerController _player;
     [SerializeField] private SelectCharacterData _selectCharacterData;
     [SerializeField] private StatusData[] _statusData;
+    
+    public float GameTime => _gameTimer;
 
     void Start()
     {

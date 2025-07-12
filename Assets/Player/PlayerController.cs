@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _weaponTimer = 1f;
     private float _currentWeaponTimer;
     private Animator animator;
+    [SerializeField] private GameManager _gameManager;
 
     private void Awake()
     {
@@ -50,6 +51,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(Time.timeScale == 0 || _gameManager._stopTime)
+            return;
+        
         _weaponTimer -= Time.deltaTime;
         Move();
 
@@ -62,6 +66,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(Time.timeScale == 0)
+            return;
+        
         _rb.velocity = _moveSpeed * _moveInput;
     }
 

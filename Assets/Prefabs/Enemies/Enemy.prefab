@@ -42,8 +42,9 @@ GameObject:
   - component: {fileID: 3965550806964141625}
   - component: {fileID: 3389293135771898765}
   - component: {fileID: 2422318343571657231}
-  - component: {fileID: 322693346878604231}
   - component: {fileID: -1435853475561660798}
+  - component: {fileID: 322693346878604231}
+  - component: {fileID: -6430729400837755083}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
@@ -164,25 +165,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &322693346878604231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8179017520600557509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2f23404d0875aa44941861c7ba7937b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _muzzle: {fileID: 6181416717786882424}
-  _bullet: {fileID: 7009411046348265593, guid: b0c4adae758a8394ba987a5c433ddb5f, type: 3}
-  _knockBackForce: 5
-  _isPlayerInRange: 0
-  _isHit: 0
-  _currentAtk: 3
-  _expGain: 0
 --- !u!50 &-1435853475561660798
 Rigidbody2D:
   serializedVersion: 4
@@ -210,3 +192,40 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &322693346878604231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8179017520600557509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f23404d0875aa44941861c7ba7937b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _muzzle: {fileID: 6181416717786882424}
+  _bullet: {fileID: 7009411046348265593, guid: b0c4adae758a8394ba987a5c433ddb5f, type: 3}
+  _knockBackForce: 5
+  _debugData: {fileID: 0}
+  _debugPlayer: {fileID: 0}
+  _debugLevel: {fileID: 0}
+  _isPlayerInRange: 0
+  _isHit: 0
+  _currentAtk: 3
+--- !u!114 &-6430729400837755083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8179017520600557509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2646e1b6f9e8d4d887c08a926cdfb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smallExpOrbPrefab: {fileID: 222474737510204529, guid: f39bbe3d116a67e4193c0c8d2b1426d9, type: 3}
+  largeExpOrbPrefab: {fileID: 2107725865874635035, guid: ec4168eaea467fd4baebe00ff1d7e9ad, type: 3}
+  smallOrbChance: 0.8
+  dropCount: 1

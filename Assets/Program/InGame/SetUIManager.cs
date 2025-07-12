@@ -76,6 +76,9 @@ public class SetUIManager : MonoBehaviour
             case UpgradeOption.EffectType.Heal:
                 _player.Heal(option.value);
                 break;
+            case UpgradeOption.EffectType.BoostSpeed:
+                _player.BoostSpeed(option.value);
+                break;
         }
 
         Debug.Log($"[SetUIManager] Applied upgrade: {option.optionName}");

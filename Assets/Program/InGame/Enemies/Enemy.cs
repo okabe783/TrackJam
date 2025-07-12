@@ -123,6 +123,20 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         ScoreManager.I.AddScore(_scoreValue);
+        
+        /// <summary>
+        // 経験値オーブを落とす
+        ExpDropper dropper = GetComponent<ExpDropper>();
+        if (dropper != null)
+        {
+            dropper.DropExpOrbs();
+        }
+        /// <summary>
+
+        Destroy(gameObject);
+
+        gameObject.SetActive(false);
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

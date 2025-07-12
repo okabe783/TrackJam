@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Create StatusData")]
 public class StatusData : ScriptableObject
 {
-    public int _hp;//HP
-    public float _moveSpeed; //移動速度
+    public int Hp;//HP
+    public float MoveSpeed; //移動速度
+    public float Atk;
 }

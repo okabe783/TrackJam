@@ -24,7 +24,7 @@ public class ScoreManager : SingletonMonoBehaviour<ScoreManager>
     {
         if (_scoreText != null)
         {
-            _scoreText.text = "Score : " + _score.ToString();
+            _scoreText.text = "Score : " + _score;
         }
     }
 }

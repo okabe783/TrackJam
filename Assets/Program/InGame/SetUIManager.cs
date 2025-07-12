@@ -22,31 +22,34 @@ public class SetUIManager : MonoBehaviour
         _player = player;
     }
 
-    public void OpenSelection(Action onComplete)
+    public void OpenSelection(Action onComplete, PlayerController player)
     {
-        _onComplete = onComplete;
         _selectionUI.SetActive(true);
+        _onComplete = onComplete;
+        _player = player;
 
-        // ランダムに3つ選ぶ
-        List<UpgradeOption> selected = GetRandomOptions(3);
+        // ランダム3つ選ぶ
+        List<UpgradeOption> selectedOptions = GetRandomOptions(3);
 
         for (int i = 0; i < _optionButtons.Length; i++)
         {
             int index = i;
+            UpgradeOption option = selectedOptions[index];
             Button button = _optionButtons[i];
             Text buttonText = button.GetComponentInChildren<Text>();
 
             if (buttonText != null)
-                buttonText.text = selected[i].optionName;
+                buttonText.text = option.optionName;
 
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() =>
             {
-                ApplyUpgrade(selected[index]);
-                CloseUI();
+                ApplyUpgrade(option);   // ←選択されたオプション適用
+                CloseUI();              // ←UI閉じて再開処理
             });
         }
     }
+
 
     private List<UpgradeOption> GetRandomOptions(int count)
     {

@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 //スポーンモード
 public enum Spawnmodes
@@ -12,7 +12,7 @@ public enum Spawnmodes
 
 public class Spawner : MonoBehaviour
 {
-    //スポーンモードの選択
+    [Header("スポーンモード設定")]
     [SerializeField] private Spawnmodes spawnModes = Spawnmodes.constant;
     //最短のスポーン間隔
     [SerializeField] private float minRandomDelay;
@@ -20,31 +20,34 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float maxRandomDelay;
     //一定モードのスポーン時間
     [SerializeField] private float constantSpawnTime;
-    //スポーンさせる数を設定する
-    [SerializeField] private int enemyCount = 10;
-    [SerializeField] private int poolSize = 20;
-    // 敵プレハブ（Enemy）
-    [SerializeField]public GameObject EnemyPrefab;
+    
+    [Header("スポーン制御")]
+    [SerializeField] private int enemyCount = 100;
+    // 一度にだす量
+    [SerializeField] private int _spawnCountPerWave = 3;
+    [SerializeField] private float _spawnRadius = 3f;
+    [SerializeField] private Transform[] _spawnPoints;
     
     // シーンにあるPlayerObj
     [SerializeField] private PlayerController _player;
     // EnemyのData
     [SerializeField] private List<EnemyStutsData> _enemyStutsList;
+    [SerializeField] private PlayerLevelManager _playerLevelManager;
     
     //タイマー変数
     public float spawnTimer;
     // Spawn可能かどうか
     public bool _isSpawn;
     //スポーンさせた数（数を追加していく）
-    public float spawned;
+    public float _spawned;
     //enemyのオブジェクトプール用
-    private ObjectPooler pooler;
+    private ObjectPooler _pooler;
     
 
     private void Start()
     {
         //変数にコンポーネントを格納する
-        pooler = GetComponent<ObjectPooler>();
+        _pooler = GetComponent<ObjectPooler>();
         _isSpawn = false;
     }
 
@@ -61,14 +64,16 @@ public class Spawner : MonoBehaviour
             spawnTimer = GetSpawnDelay();
 
             //スポーン上限の確認
-            if (spawned < enemyCount)
+            if (_spawned < enemyCount)
             {
-                //生成済みの数を追加
-                spawned++;
-
-                //敵を生成
-                SpawnEnemy();
-
+                for (int i = 0; i < _spawnCountPerWave; i++)
+                {
+                    if (_spawned >= enemyCount) 
+                        break;
+                    
+                    _spawned++;
+                    SpawnEnemy();
+                }
             }
         }
     }
@@ -80,11 +85,11 @@ public class Spawner : MonoBehaviour
     private void SpawnEnemy()
     {
         //プールから取得して変数に格納
-        GameObject newInstance = pooler.GetObjectFromPool();
-        var stutsData = _enemyStutsList[UnityEngine.Random.Range(0, _enemyStutsList.Count)];
+        GameObject newInstance = _pooler.GetObjectFromPool();
+        var stutsData = _enemyStutsList[Random.Range(0, _enemyStutsList.Count)];
         
         Enemy enemy = newInstance.GetComponent<Enemy>();
-        enemy.Init(_player,stutsData);
+        enemy.Init(_player,stutsData,_playerLevelManager);
         
         //エネミーの初期設定
         SetEnemy(newInstance);
@@ -94,11 +99,9 @@ public class Spawner : MonoBehaviour
 
     private void SetEnemy(GameObject newInstance)
     {
-        //enemyでMovepointを使えるように格納している
-        Enemy enemy = newInstance.GetComponent<Enemy>();
-       
-        //生成位置をこのオブジェクトの位置に設定
-        enemy.transform.position = transform.position;
+        Transform basePoints = _spawnPoints[Random.Range(0,_spawnPoints.Length)];
+        Vector2 offset = Random.insideUnitCircle * _spawnRadius;
+        newInstance.transform.position = basePoints.position + (Vector3)offset;
     }
 
     /// <summary>
@@ -114,7 +117,7 @@ public class Spawner : MonoBehaviour
         else
         {
             //引数の間からランダムな数値を選んで返す
-            return UnityEngine.Random.Range(minRandomDelay, maxRandomDelay);
+            return Random.Range(minRandomDelay, maxRandomDelay);
 
         }
     }

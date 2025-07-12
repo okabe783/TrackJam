@@ -69,19 +69,19 @@ public class EnemyTimer : MonoBehaviour
         void EnemyUptime()
         {
             Debug.Log("一回目の変化");
-            _spawner.minRandomDelay = 1f;
-            _spawner.maxRandomDelay = _firstChange;
+            // _spawner.minRandomDelay = 1f;
+            // _spawner.maxRandomDelay = _firstChange;
 
             _waveup1 = true;
         }
         void UptimeenemyCount()
         {
-            _spawner.enemyCount += _changeCount;
+            //_spawner.enemyCount += _changeCount;
             _waveup2 = true;
         }
         void FinalChenge()
         {
-            _spawner.enemyCount += _changeCount;
+          //  _spawner.enemyCount += _changeCount;
 
         }
     }

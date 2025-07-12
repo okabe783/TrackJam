@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
         _maxHp = _statusData.Hp;
         _moveSpeed = _statusData.MoveSpeed;
         _isDead = false;
+        _attackPower = _statusData.Atk;
     }
 
     void Start()
@@ -118,7 +119,6 @@ public class PlayerController : MonoBehaviour
         if (_isDead) return;
 
         //_currentHp -= damage;
-        Debug.Log($"[Player] ダメージ: {damage} / HP: {_currentHp}");
 
         if (_currentHp <= 0)
         {
@@ -129,7 +129,6 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         _isDead = true;
-        Debug.Log("[Player] 死亡");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -145,7 +144,8 @@ public class PlayerController : MonoBehaviour
 
     public void AddWeapon(GameObject weaponPrefab)
     {
-        if (weaponPrefab == null) return;
+        if (weaponPrefab == null)
+            return;
 
         GameObject newWeapon = Instantiate(weaponPrefab, transform.position + Vector3.right, Quaternion.identity);
         newWeapon.transform.SetParent(transform);
@@ -190,4 +190,5 @@ public class PlayerController : MonoBehaviour
         _moveSpeed += amount;
         Debug.Log($"[Player] 移動速度 +{amount}（現在: {_moveSpeed}）");
     }
+
 }

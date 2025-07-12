@@ -38,10 +38,9 @@ public class Enemy : MonoBehaviour
     private float _timer;
     private float _attackTimer;
 
-
     Rigidbody2D _rb;
 
-    public void Init(PlayerController player, EnemyStutsData stutsData)
+    public void Init(PlayerController player, EnemyStutsData stutsData,PlayerLevelManager playerLevelManager)
     {
         _player = player;
         _stutsData = stutsData;
@@ -55,6 +54,7 @@ public class Enemy : MonoBehaviour
         _knockBackForce = _stutsData.KnockBack;
         _attackRange = _stutsData.ATTACKRANGE;
         _attackInterval = _stutsData.ATTACKINTERVAL;
+        _playerLevelManager = playerLevelManager;
     }
 
     private void Awake()

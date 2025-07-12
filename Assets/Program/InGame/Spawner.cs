@@ -28,6 +28,10 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float _spawnRadius = 3f;
     [SerializeField] private Transform[] _spawnPoints;
     
+    [Header("ボス出現設定")]
+    [SerializeField] private List<BossSpawnData> _bossSpawnDataList;
+    private int _bossIndex = 0;
+    
     // シーンにあるPlayerObj
     [SerializeField] private PlayerController _player;
     // EnemyのData
@@ -63,6 +67,7 @@ public class Spawner : MonoBehaviour
 
         // 経過時間に応じて敵を増やす
         UpdateSpawnCountPerWave();
+        CheckBossSpawn();
         
         //確認
         if (spawnTimer < 0)
@@ -110,6 +115,41 @@ public class Spawner : MonoBehaviour
         // 30秒ごとにスポーン数+1（最大10体まで）
         _spawnCountPerWave = Mathf.Clamp(3 + Mathf.FloorToInt(gameTime / 30f), 3, 10);
     }
+    
+    private void CheckBossSpawn()
+    {
+        if (_bossIndex >= _bossSpawnDataList.Count)
+            return;
+
+        var data = _bossSpawnDataList[_bossIndex];
+        if (_gameManager.GameTime >= data.SpawnTime)
+        {
+            Debug.Log("開始");
+            SpawnBoss(data);
+            _bossIndex++;
+        }
+    }
+    
+    private void SpawnBoss(BossSpawnData data)
+    {
+        if (data.BossPrefab == null) 
+            return;
+
+        GameObject boss = Instantiate(data.BossPrefab);
+        boss.name = "Boss";
+        Transform basePoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+        Vector2 offset = data.SpawnOffset;
+        boss.transform.position = basePoint.position + (Vector3)offset;
+        
+        Boss bossScript = boss.GetComponent<Boss>();
+        if (bossScript != null)
+        {
+            bossScript.Init(_player, data.StutsData, _playerLevelManager);
+        }
+
+        Debug.Log($"[Spawner] ボス出現: {data.BossPrefab.name}（{data.SpawnTime}秒）");
+    }
+
 
     private void SetEnemy(GameObject newInstance)
     {
@@ -132,7 +172,6 @@ public class Spawner : MonoBehaviour
         {
             //引数の間からランダムな数値を選んで返す
             return Random.Range(minRandomDelay, maxRandomDelay);
-
         }
     }
 }

@@ -172,7 +172,7 @@ public class Enemy : MonoBehaviour
 
         Debug.Log("近距離攻撃！");
 
-        //_player.TakeDamage(_currentAtk);
+        _player.TakeDamage(_currentAtk);
 
         // ノックバックも入れる場合
         KnockBack();

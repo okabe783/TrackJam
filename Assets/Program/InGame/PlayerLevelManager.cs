@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerLevelManager : MonoBehaviour
 {
     public int level = 1;
-    private float currentExp = 0;
+    public float currentExp = 0;
     //レベルアップに必要な経験値
     public float expToLevelUp = 10;
     // ↑ ×(レベル)↓乗 = レベルアップに必要な経験値
@@ -40,6 +40,7 @@ public class PlayerLevelManager : MonoBehaviour
         UpdateExpToLevelUp();
         
         //時間を止める処理を横障子からもらう
+        
 
         /// HP全回復
         //playerHealth.RecoverFull();

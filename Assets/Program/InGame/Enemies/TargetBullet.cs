@@ -37,10 +37,12 @@ public class TargetBullet : MonoBehaviour
         transform.Translate(_direction * _bulletSpeed);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.TakeDamage(_power);
             Destroy(gameObject);
         }
     }

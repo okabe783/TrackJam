@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _gameTimer;
     [SerializeField] private int _countdownTimer;
     public bool _stopTime;
-    public int Score;
 
     [Header("プレイヤー関連")]
     [SerializeField] private PlayerController _player;
@@ -36,7 +35,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         Timer();
-        _scoreText.text = Score.ToString();
     }
 
     private void Timer()
@@ -58,16 +56,23 @@ public class GameManager : MonoBehaviour
         
         _player._statusData = _statusData[Mathf.Clamp(id - 1, 0, _statusData.Length - 1)];
     }
+    
+    public void OnLevelUp()
+    {
+        Time.timeScale = 0;
+        _setUIManager.OpenSelection(() =>
+        {
+            // UI閉じたら再開
+            Time.timeScale = 1f;
+        }, _player);
+    }
 
     public void TimeStop()
     {
         Time.timeScale = 0;
         _stopTime = true;
 
-        _setUIManager.OpenSelection(() =>
-        {
-            TimeResume();
-        });
+        _setUIManager.OpenSelection(TimeResume, _player);
     }
 
     public void TimeResume()

@@ -12,18 +12,15 @@ public class PlayerLevelManager : MonoBehaviour
     // ↑ ×(レベル)↓乗 = レベルアップに必要な経験値
     [SerializeField,Header("↑ ×(レベル)↓乗 = レベルアップに必要な経験値")]
     public float expMultiplierRequired = 1.5f;
+    
+    [SerializeField] private GameManager _gameManager;
 
     /// <summary>
     /// HP全回復と武器について
     /// </summary>
     //public PlayerHealth playerHealth;
     //public WeaponSelectionUI weaponSelectionUI;
-
-    void Start()
-    {
-        UpdateExpToLevelUp();
-    }
-
+    
     public void AddExperience(float amount)
     {
         currentExp += amount;
@@ -46,6 +43,7 @@ public class PlayerLevelManager : MonoBehaviour
         //playerHealth.RecoverFull();
         /// 武器選択UIを開く
         //weaponSelectionUI.OpenWeaponSelection();
+        _gameManager.OnLevelUp(); 
     }
 
     void UpdateExpToLevelUp()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Playerオブジェクトの親にアタッチするクラス
@@ -22,13 +23,13 @@ public class PlayerController : MonoBehaviour
         _moveSpeed = _statusData._moveSpeed;
         _isDead = false;
     }
-    
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _currentHp = _maxHp;
     }
-    
+
     void Update()
     {
         Move();
@@ -48,22 +49,24 @@ public class PlayerController : MonoBehaviour
         _moveInput = new Vector2(moveX, moveY).normalized;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void TakeDamage(int damage)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            int enemyAtk = collision.gameObject.GetComponent<Enemy>()._currentAtk;
-            
-            // ここで敵の攻撃力分のダメージを受ける
-            _currentHp -= enemyAtk;
+        _currentHp -= damage;
 
-            if (_currentHp == 0 && _isDead == false)
-            {
-                // バグらないようにフラグをたてる
-                _isDead = true;
-                Debug.Log("ゲームオーバー");
-                //ゲームオーバー処理を書く
-            }
+        //0以下になったら死亡
+        if (_currentHp <= 0)
+        {
+            Die();
         }
+    }
+
+    void Die()
+    {
+        //アニメーションを作ってここではる   
+    }
+
+    private void  Destroy()
+    {
+        SceneManager.LoadScene("Result");
     }
 }

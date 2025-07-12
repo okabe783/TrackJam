@@ -37,7 +37,11 @@ public class Absolute : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            Enemy enemyComponent = enemy.GetComponent<Enemy>();
+            if (enemyComponent != null)
+            {
+                enemyComponent.TakeDamage(attackDamage);
+            }
 
 
         }

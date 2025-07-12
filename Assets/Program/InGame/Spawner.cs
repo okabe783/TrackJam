@@ -15,13 +15,13 @@ public class Spawner : MonoBehaviour
     //スポーンモードの選択
     [SerializeField] private Spawnmodes spawnModes = Spawnmodes.constant;
     //最短のスポーン間隔
-    [SerializeField] public float minRandomDelay;
+    [SerializeField] private float minRandomDelay;
     //最長のスポーン間隔
-    [SerializeField] public float maxRandomDelay;
+    [SerializeField] private float maxRandomDelay;
     //一定モードのスポーン時間
     [SerializeField] private float constantSpawnTime;
     //スポーンさせる数を設定する
-    [SerializeField] public int enemyCount = 10;
+    [SerializeField] private int enemyCount = 10;
     [SerializeField] private int poolSize = 20;
     // 敵プレハブ（Enemy）
     [SerializeField]public GameObject EnemyPrefab;

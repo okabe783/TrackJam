@@ -1,25 +1,17 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
     [Header("プレイヤー参照")]
     [SerializeField] private Transform _muzzle;  //発射口
     [SerializeField] private GameObject _bullet;  //弾
-    [SerializeField] PlayerLevelManager _playerLevelManager;
     private PlayerController _player;  //プレイヤーオブジェクト
     private Vector3 _playerPos;  //プレイヤーの現在位置
 
     [Header("StatsData参照")]
-    EnemyStutsData _stutsData;  //敵別ステータスの設定
-
-    [Header("ノックバック力")]
-    [SerializeField] private float _knockBackForce = 5f;
+    [SerializeField] EnemyStutsData _stutsData;  //敵別ステータスの設定
 
     [HideInInspector] public bool _isPlayerInRange;
-    [HideInInspector] public bool _isHit;
 
     private int _currentHp;
     public int _currentAtk;
@@ -27,8 +19,6 @@ public class Enemy : MonoBehaviour
     private float _timer;
     private int _scoreValue;
     private float _currentSpeed;
-    public float _expGain;
-    Rigidbody2D _rb;
 
     public void Init(PlayerController player, EnemyStutsData stutsData)
     {
@@ -40,12 +30,6 @@ public class Enemy : MonoBehaviour
         _currentSpeed = _stutsData.SPEED;
         _fireInterval = _stutsData.FireInterval;
         _scoreValue = _stutsData.SCORE;
-        _expGain = _stutsData.EXP;
-    }
-
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -136,36 +120,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void KnockBack()
-    {
-        Vector2 knockBackDirection = transform.position - _player.gameObject.transform.position;
-
-        _rb.AddForce(knockBackDirection * _knockBackForce, ForceMode2D.Impulse);
-
-    }
-
     private void Die()
     {
         ScoreManager.I.AddScore(_scoreValue);
-
-        if (_playerLevelManager != null)
-        {
-            _playerLevelManager.AddExperience(_expGain);
-            Debug.Log($"[Enemy] プレイヤーに経験値 {_expGain} を付与！");
-        }
-
-        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") &&
-            _stutsData.enemyType == EnemyStutsData.EnemyType.LongRange)
-        {
-            //PlayerControler playerControler = collision.gameObject.GetComponent<PlayerControler>();
-            //playerControler.TakeDamage(_currentAtk);
-
-            KnockBack();
-        }
+        //PlayerControler playerControler = collision.gameObject.GetComponent<PlayerControler>();
+        //playerControler.TakeDamage(_currentAtk);
     }
 }

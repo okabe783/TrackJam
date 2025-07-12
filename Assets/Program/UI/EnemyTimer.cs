@@ -19,12 +19,14 @@ public class EnemyTimer : MonoBehaviour
     [SerializeField] float _finalWave = 30f;
     [SerializeField, Header("ウェーブの変更する数字")] float _firstChange = 3;
     [SerializeField] int _changeCount = 3; //最大数の変更この値を足していきたい
+    [SerializeField] float _rest = 50f; //ウェーブのリセット時間出す敵やステータスを上げたい
 
 
     Spawner _spawner;
-    bool _waveup1 = false;
-    bool _waveup2 = false; 
-    bool _waveup3 = false;
+   public bool _waveup1 = false;
+   public bool _waveup2 = false;
+   public bool _waveup3 = false;
+
 
 
     float _gametimer = 0f;
@@ -56,24 +58,31 @@ public class EnemyTimer : MonoBehaviour
         {
             FinalChenge();
         }
+        else if (_gametimer > _rest && _waveup3 == true)
+        {
+            _gametimer = 0;
+            _waveup1 = false;
+            _waveup2 = false;
+            _waveup3 = false;
+            _spawner = default;
+        }
+        void EnemyUptime()
+        {
+            Debug.Log("一回目の変化");
+            _spawner.minRandomDelay = 1f;
+            _spawner.maxRandomDelay = _firstChange;
 
-    }
-    void EnemyUptime()
-    {
-        Debug.Log("一回目の変化");
-        _spawner.minRandomDelay = 1f;
-        _spawner.maxRandomDelay = _firstChange;
+            _waveup1 = true;
+        }
+        void UptimeenemyCount()
+        {
+            _spawner.enemyCount += _changeCount;
+            _waveup2 = true;
+        }
+        void FinalChenge()
+        {
+            _spawner.enemyCount += _changeCount;
 
-        _waveup1 = true;
-    }
-    void UptimeenemyCount()
-    {
-        _spawner.enemyCount += _changeCount;
-        _waveup2 = true;
-    }
-    void FinalChenge()
-    {
-        _spawner.enemyCount += _changeCount;
-
+        }
     }
 }

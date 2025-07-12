@@ -13,20 +13,24 @@ public class PlayerController : MonoBehaviour
 
     [Header("発射位置")]
     [SerializeField] private Transform _muzzle;
-    
-    
+
+
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
+    private Animator _animators;
 
     private int _maxHp;
     private float _moveSpeed;
     private int _currentHp;
     private bool _isDead;
     private float _attackPower;
+    private bool _isFacingRight = true;
+
 
     private List<GameObject> _ownedWeapons = new();
     [SerializeField] private float _weaponTimer = 1f;
     private float _currentWeaponTimer;
+    private Animator animator;
 
     private void Awake()
     {
@@ -37,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _currentHp = _maxHp;
         _currentWeaponTimer = _weaponTimer;
@@ -66,8 +71,30 @@ public class PlayerController : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical");
 
         _moveInput = new Vector2(moveX, moveY).normalized;
+        if (moveX > 0 && !_isFacingRight)
+        {
+            Flip();
+        }
+        else if (moveX < 0 && _isFacingRight)
+        {
+            Flip();
+        }
+        Anim();
+
     }
-    
+    private void Flip()
+    {
+        _isFacingRight = !_isFacingRight;
+
+        Vector2 scaler = transform.localScale;
+        scaler.x *= -1;
+        transform.localScale = scaler;
+    }
+    private void Anim()
+    {
+        animator.SetBool("RightAnimation", _moveInput.x != 0.0f);
+    }
+
     private void Attack()
     {
         if (_weaponPrefab == null || _muzzle == null)
@@ -104,7 +131,7 @@ public class PlayerController : MonoBehaviour
         _isDead = true;
         Debug.Log("[Player] 死亡");
     }
-    
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -113,7 +140,7 @@ public class PlayerController : MonoBehaviour
             TakeDamage(enemyAtk);
         }
     }
-    
+
     // ========== 強化/回復 ==========
 
     public void AddWeapon(GameObject weaponPrefab)

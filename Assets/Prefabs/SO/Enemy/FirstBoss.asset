@@ -19,7 +19,7 @@ MonoBehaviour:
   EXP: 100
   SCORE: 100
   enemyType: 2
-  ATTACKRANGE: 3
+  ATTACKRANGE: 2
   ATTACKINTERVAL: 2
   FireInterval: 2
   RUSHSPEED: 3

@@ -41,11 +41,11 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameManager _gameManager;
     
     //タイマー変数
-    public float spawnTimer;
+    public float SpawnTimer;
     // Spawn可能かどうか
-    public bool _isSpawn;
+    public bool IsSpawn;
     //スポーンさせた数（数を追加していく）
-    public float _spawned;
+    public float Spawned;
     //enemyのオブジェクトプール用
     private ObjectPooler _pooler;
     
@@ -54,35 +54,35 @@ public class Spawner : MonoBehaviour
     {
         //変数にコンポーネントを格納する
         _pooler = GetComponent<ObjectPooler>();
-        _isSpawn = false;
+        IsSpawn = false;
     }
 
     private void Update()
     {
-        if(!_isSpawn)
+        if(!IsSpawn)
             return;
         
         //spawnタイマーの時間を減らす
-        spawnTimer -= Time.deltaTime;
+        SpawnTimer -= Time.deltaTime;
 
         // 経過時間に応じて敵を増やす
         UpdateSpawnCountPerWave();
         CheckBossSpawn();
         
         //確認
-        if (spawnTimer < 0)
+        if (SpawnTimer < 0)
         {
-            spawnTimer = GetSpawnDelay();
+            SpawnTimer = GetSpawnDelay();
 
             //スポーン上限の確認
-            if (_spawned < enemyCount)
+            if (Spawned < enemyCount)
             {
                 for (int i = 0; i < _spawnCountPerWave; i++)
                 {
-                    if (_spawned >= enemyCount) 
+                    if (Spawned >= enemyCount) 
                         break;
                     
-                    _spawned++;
+                    Spawned++;
                     SpawnEnemy();
                 }
             }
@@ -124,7 +124,6 @@ public class Spawner : MonoBehaviour
         var data = _bossSpawnDataList[_bossIndex];
         if (_gameManager.GameTime >= data.SpawnTime)
         {
-            Debug.Log("開始");
             SpawnBoss(data);
             _bossIndex++;
         }

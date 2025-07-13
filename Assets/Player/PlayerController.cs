@@ -13,8 +13,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("発射位置")]
     [SerializeField] private Transform _muzzle;
-
-
+    
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
     private Animator _animators;
@@ -25,7 +24,6 @@ public class PlayerController : MonoBehaviour
     private bool _isDead;
     private float _attackPower;
     private bool _isFacingRight = true;
-
 
     private List<GameObject> _ownedWeapons = new();
     [SerializeField] private float _weaponTimer = 1f;
@@ -88,8 +86,8 @@ public class PlayerController : MonoBehaviour
             Flip();
         }
         Anim();
-
     }
+    
     private void Flip()
     {
         _isFacingRight = !_isFacingRight;
@@ -98,6 +96,7 @@ public class PlayerController : MonoBehaviour
         scaler.x *= -1;
         transform.localScale = scaler;
     }
+    
     private void Anim()
     {
         animator.SetBool("RightAnimation", _moveInput.magnitude != 0.0f);
@@ -157,8 +156,6 @@ public class PlayerController : MonoBehaviour
         GameObject newWeapon = Instantiate(weaponPrefab, transform.position + Vector3.right, Quaternion.identity);
         newWeapon.transform.SetParent(transform);
         _ownedWeapons.Add(newWeapon);
-
-        Debug.Log($"[Player] 武器追加: {weaponPrefab.name}");
     }
 
     public void UpgradeExistingWeapon(string weaponName)
@@ -171,7 +168,6 @@ public class PlayerController : MonoBehaviour
                 if (upgradable != null)
                 {
                     upgradable.Upgrade();
-                    Debug.Log($"[Player] {weaponName} をレベルアップ");
                 }
                 return;
             }
@@ -183,19 +179,15 @@ public class PlayerController : MonoBehaviour
     public void UpgradeAttack(int amount)
     {
         _attackPower += amount;
-        Debug.Log($"[Player] 攻撃力アップ: +{amount} (現在: {_attackPower})");
     }
 
     public void Heal(int value)
     {
         _currentHp = Mathf.Min(_currentHp + value, _maxHp);
-        Debug.Log($"[Player] HP回復 +{value}（{_currentHp}/{_maxHp}）");
     }
 
     public void BoostSpeed(float amount)
     {
         _moveSpeed += amount;
-        Debug.Log($"[Player] 移動速度 +{amount}（現在: {_moveSpeed}）");
     }
-
 }

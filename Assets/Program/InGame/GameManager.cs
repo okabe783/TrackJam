@@ -97,6 +97,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _countdownText.gameObject.SetActive(false);
         _stopTime = false;
-        _spawner._isSpawn = true;
+        _spawner.IsSpawn = true;
     }
 }

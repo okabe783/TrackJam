@@ -21,8 +21,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SelectCharacterData _selectCharacterData;
     [SerializeField] private StatusData[] _statusData;
     [SerializeField] private AudioClip _bgmClip;
-    
+
+    [SerializeField] private float _resultChangeTimer;
     public float GameTime => _gameTimer;
+    private bool _isGameEnded = false;
 
     void Start()
     {
@@ -41,6 +43,16 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         Timer();
+        CheckGameEnd();
+    }
+    
+    private void CheckGameEnd()
+    {
+        if (!_isGameEnded && _gameTimer >= _resultChangeTimer)
+        {
+            _isGameEnded = true; // 再実行防止
+            SceneChanger.I.ChangeScene("03_Result");
+        }
     }
 
     private void Timer()

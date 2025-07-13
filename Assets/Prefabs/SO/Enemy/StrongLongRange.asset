@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 594471ead734d5f439102af8d9c9af45, type: 3}
-  m_Name: StrongSkeleton
+  m_Name: StrongLongRange
   m_EditorClassIdentifier: 
   MAXHP: 15
   ATK: 8

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Create EnemyStatusData")]
 
@@ -24,8 +25,12 @@ public class EnemyStutsData : ScriptableObject
     public float FireInterval;
 
     [Header("突進設定")]
-    public float _RUSHSPEED;  //突進速度
+    public float RUSHSPEED;  //突進速度
     public float RUSHINTERVAL;  //突進のインターバル
+
+    [Header("アニメーター")]
+    public AnimatorController ANIM;
+    public Sprite SPR;
 
     public enum EnemyType
     {

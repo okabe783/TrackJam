@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 7784515143553250593}
   - component: {fileID: 6854654173354093209}
   - component: {fileID: 1870191610504492478}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LongRange
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,6 +109,7 @@ MonoBehaviour:
   _debugLevel: {fileID: 0}
   _isPlayerInRange: 0
   _isHit: 0
+  _currentAtk: 0
 --- !u!61 &7784515143553250593
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -213,7 +214,7 @@ GameObject:
   - component: {fileID: 5389386961724988068}
   - component: {fileID: 8409917789981394387}
   - component: {fileID: 240081769228198828}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SerchArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7032948350682488843}
   - component: {fileID: 705602849710157488}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2499529196677609887}
   - component: {fileID: 4657183144433516452}
   - component: {fileID: 257632564460415455}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StrongWorm
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   _debugLevel: {fileID: 0}
   _isPlayerInRange: 0
   _isHit: 0
+  _currentAtk: 0
 --- !u!50 &4657183144433516452
 Rigidbody2D:
   serializedVersion: 4

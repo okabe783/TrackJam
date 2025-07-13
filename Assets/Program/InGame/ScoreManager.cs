@@ -12,6 +12,18 @@ public class ScoreManager : SingletonMonoBehaviour<ScoreManager>
     private int _score = 0;
     public int Score => _score;
     
+    private void Awake()
+    {
+        // すでにインスタンスがあるなら破棄（SingletonMonoBehaviour 側でやってるなら不要）
+        if (this != I)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject); // ★ここで永続化！
+    }
+    
     // スコア加算のメソッド
     public void AddScore(int amount)
     {

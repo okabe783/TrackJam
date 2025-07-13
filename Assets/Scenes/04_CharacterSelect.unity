@@ -431,6 +431,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 592972813909366865, guid: 816556fbad2179a449b5dd32983ac844, type: 3}
+      propertyPath: _selectClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d0bd3d0dda48af4aacd1e16b39dfcf0, type: 3}
+    - target: {fileID: 592972813909366865, guid: 816556fbad2179a449b5dd32983ac844, type: 3}
       propertyPath: _startButton
       value: 
       objectReference: {fileID: 495693182}

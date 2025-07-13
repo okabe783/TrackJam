@@ -4,6 +4,7 @@ using DG.Tweening;
 
     public class CharacterSelectManager : MonoBehaviour
     {
+        [SerializeField] private AudioClip _selectClip;
         [SerializeField] private Image _characterImage;
         [SerializeField] private Vector2 _startPosition;
         [SerializeField] private Vector2 _goalPosition;
@@ -23,6 +24,7 @@ using DG.Tweening;
         private void Start()
         {
             _startButton.OnClickAddListener(Select);
+            SoundPlayer.I.PlayBgm(_selectClip);
         }
 
         // キャラIDとSpriteを受け取って表示演出する

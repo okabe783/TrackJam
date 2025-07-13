@@ -28,6 +28,7 @@ using DG.Tweening;
         // キャラIDとSpriteを受け取って表示演出する
         public void ShowCharacter(int characterID, Sprite characterSprite)
         {
+            DOTween.Kill(_characterImageRect);
             _characterID = characterID;
 
             _characterImage.sprite = characterSprite;

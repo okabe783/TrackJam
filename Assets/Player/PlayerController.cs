@@ -13,11 +13,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("発射位置")]
     [SerializeField] private Transform _muzzle;
-    
+    [SerializeField] private SpriteRenderer _sprite;
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
     private Animator _animators;
-
+    
     private int _maxHp;
     private float _moveSpeed;
     private int _currentHp;
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
         _moveSpeed = _statusData.MoveSpeed;
         _isDead = false;
         _attackPower = _statusData.Atk;
+        _sprite.sprite = _statusData.Sprite;
     }
 
     void Start()

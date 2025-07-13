@@ -3,7 +3,9 @@ using UnityEngine.UI;
 
 public class HPBarUI : MonoBehaviour
 {
-    public Slider hpSlider; // Unityのインスペクタからセットする
+    public Transform player;        // プレイヤーのTransform
+    public Vector3 offset = new Vector3(0, 1.5f, 0);
+    public Slider hpSlider;
     public PlayerController playerController;
 
     private void Start()
@@ -19,11 +21,23 @@ public class HPBarUI : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        //追従
+        transform.position = player.position + offset;
+
+        //正面向きに
+        transform.forward = Camera.main.transform.forward;
+
+    }
+
     private void Update()
     {
         if (hpSlider != null && playerController != null)
         {
-            hpSlider.value = playerController._statusData.Hp;
+            hpSlider.value = playerController._currentHp;
         }
+
     }
 }
+

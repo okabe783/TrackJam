@@ -218,8 +218,7 @@ public class Enemy : MonoBehaviour
         /// <summary>
 
         ScoreManager.I.AddScore(_scoreValue);
-
-        _playerLevelManager.AddExperience(_expGain);
+        //_playerLevelManager.AddExperience(_expGain);
         gameObject.SetActive(false);
     }
 

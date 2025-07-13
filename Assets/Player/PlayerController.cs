@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     
     private int _maxHp;
     private float _moveSpeed;
-    private int _currentHp;
+    public int _currentHp;
     private bool _isDead;
     private float _attackPower;
     private bool _isFacingRight = true;

@@ -17,8 +17,12 @@ MonoBehaviour:
   SPEED: 0
   KnockBack: 3
   EXP: 0
-  SCORE: 0
+  SCORE: 1000
   enemyType: 4
-  FireInterval: 3
-  _RUSHSPEED: 5
+  ATTACKRANGE: 0
+  ATTACKINTERVAL: 0
+  FireInterval: 2
+  RUSHSPEED: 0
   RUSHINTERVAL: 3
+  ANIM: {fileID: 9100000, guid: f385dc06a6954da40948b135b85d0286, type: 2}
+  SPR: {fileID: 125231951, guid: 619173a8d36090e4182c25e4e5d5a1a2, type: 3}

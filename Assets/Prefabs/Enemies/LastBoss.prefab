@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 7288659566006600374}
   - component: {fileID: 5880967954598335835}
   - component: {fileID: 8977795175278256691}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LastBoss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

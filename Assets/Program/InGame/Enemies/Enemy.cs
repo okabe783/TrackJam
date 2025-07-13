@@ -15,9 +15,6 @@ public class Enemy : MonoBehaviour
     [Header("StatsData参照")]
     EnemyStutsData _stutsData;  //敵別ステータスの設定
 
-    [Header("ノックバック力")]
-    [SerializeField] private float _knockBackForce = 5f;
-
     [Header("デバッグ用")]
     public EnemyStutsData _debugData;
     public PlayerController _debugPlayer;
@@ -27,13 +24,14 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public bool _isHit;
 
     private int _currentHp;
-    public int _currentAtk;
+    private int _currentAtk;
     private float _fireInterval;
     private int _scoreValue;
     private float _currentSpeed;
     private float _expGain;
     private float _attackRange;
     private float _attackInterval;
+    private float _knockBackForce;
 
     private float _timer;
     private float _attackTimer;
@@ -174,7 +172,6 @@ public class Enemy : MonoBehaviour
 
         _player.TakeDamage(_currentAtk);
 
-        // ノックバックも入れる場合
         KnockBack();
     }
 
@@ -208,7 +205,7 @@ public class Enemy : MonoBehaviour
 
     private void KnockBack()
     {
-        Vector2 knockBackDirection = transform.position - _player.gameObject.transform.position;
+        Vector2 knockBackDirection = (transform.position - _player.gameObject.transform.position).normalized;
 
         _rb.AddForce(knockBackDirection * _knockBackForce, ForceMode2D.Impulse);
 

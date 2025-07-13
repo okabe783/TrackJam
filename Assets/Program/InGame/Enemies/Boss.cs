@@ -77,7 +77,7 @@ public class Boss : MonoBehaviour
         _scoreValue = _stutsData.SCORE;
         _expGain = _stutsData.EXP;
         _knockBackForce = _stutsData.KnockBack;
-        _rushSpeed = _stutsData._RUSHSPEED;
+        _rushSpeed = _stutsData.RUSHSPEED;
         _rushInterval = _stutsData.RUSHINTERVAL;
         _attackRange = _stutsData.ATTACKRANGE;
         _attackInterval = _stutsData.ATTACKINTERVAL;
@@ -326,7 +326,7 @@ public class Boss : MonoBehaviour
 
     private void KnockBackBoss()
     {
-        Vector2 knockBackDirection = transform.position - _player.gameObject.transform.position;
+        Vector2 knockBackDirection = (transform.position - _player.gameObject.transform.position).normalized;
 
         _bossRb.AddForce(knockBackDirection * _knockBackForce, ForceMode2D.Impulse);
 
@@ -357,6 +357,11 @@ public class Boss : MonoBehaviour
         {
             _playerLevelManager.AddExperience(_expGain);
             Debug.Log($"[Enemy] プレイヤーに経験値 {_expGain} を付与！");
+        }
+
+        if (_stutsData.enemyType == EnemyStutsData.EnemyType.LastBoss)
+        {
+            SceneChanger.I.ChangeScene("ResultScene");
         }
 
         gameObject.SetActive(false);

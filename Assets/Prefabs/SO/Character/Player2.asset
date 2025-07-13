@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4952e676dfbc064f9423d16a2f7ea18, type: 3}
   m_Name: Player2
   m_EditorClassIdentifier: 
-  _hp: 2
-  _moveSpeed: 2
+  Sprite: {fileID: 1928773390, guid: f7da9810ba3ec4b42868d4d1470aa4a1, type: 3}
+  Hp: 0
+  MoveSpeed: 0
+  Atk: 0

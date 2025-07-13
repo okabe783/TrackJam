@@ -1220,6 +1220,18 @@ PrefabInstance:
       propertyPath: EnemyPrefab
       value: 
       objectReference: {fileID: 4996195841870811437, guid: 8ec79923d47739642ad5b41ada27352d, type: 3}
+    - target: {fileID: 4814975112517371879, guid: 2b42e1d62b4e7614ab4e1b7126d266cf, type: 3}
+      propertyPath: EnemyPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 4996195841870811437, guid: 8ec79923d47739642ad5b41ada27352d, type: 3}
+    - target: {fileID: 4814975112517371879, guid: 2b42e1d62b4e7614ab4e1b7126d266cf, type: 3}
+      propertyPath: EnemyPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 1706892343690648320, guid: 35b43d9d888053c499c8c6af798084d6, type: 3}
+    - target: {fileID: 4814975112517371879, guid: 2b42e1d62b4e7614ab4e1b7126d266cf, type: 3}
+      propertyPath: EnemyPrefab.Array.data[2]
+      value: 
+      objectReference: {fileID: 2326813527982804173, guid: b6700d89e282b6d468c94da1c136c3cc, type: 3}
     - target: {fileID: 6903605239579245436, guid: 2b42e1d62b4e7614ab4e1b7126d266cf, type: 3}
       propertyPath: m_Name
       value: EnemyGenrator

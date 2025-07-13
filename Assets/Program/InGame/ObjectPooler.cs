@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-    [SerializeField] public GameObject EnemyPrefab;
+    [SerializeField] private GameObject[] EnemyPrefab;
     //生成する数
     [SerializeField] public int poolSize = 20;
     //生成したオブジェクトを管理するリスト
@@ -38,15 +38,13 @@ public class ObjectPooler : MonoBehaviour
     /// <returns></returns>
     private GameObject CreateObject()
     {
-        //オブジェクトを作成して変数に格納する
-        GameObject newInstance = Instantiate(EnemyPrefab);
-        
-        //親の設定
+        int randomIndex = Random.Range(0, EnemyPrefab.Length);
+        GameObject selectedPrefab = EnemyPrefab[randomIndex];
+
+        GameObject newInstance = Instantiate(selectedPrefab);
         newInstance.transform.SetParent(poolContainer.transform);
-        //非表示
         newInstance.SetActive(false);
         pool.Add(newInstance);
-        //返す
         return newInstance;
     }
 

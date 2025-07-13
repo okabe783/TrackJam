@@ -519,6 +519,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 177353167290717490, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177353167290717490, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2039857851, guid: f71bc0ce3b84dda43801504748e526b5, type: 3}
+    - target: {fileID: 350615062473510691, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 350615062473510691, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1928773390, guid: f7da9810ba3ec4b42868d4d1470aa4a1, type: 3}
     - target: {fileID: 432792092153206943, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -599,6 +615,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1966627817789529595, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1966627817789529595, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1214402316, guid: 4a350331c4bf2fd4bb8994072e7c1c85, type: 3}
+    - target: {fileID: 2173006425310459821, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Text
+      value: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u9078\u629E"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173006425310459821, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173006425310459821, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Color.g
+      value: 0.64011264
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173006425310459821, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2983845870229528558, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: m_Name
       value: CharacterSelectCanvas
@@ -606,7 +646,7 @@ PrefabInstance:
     - target: {fileID: 3007904586999559257, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: _characterSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8260fa3e4fbaa204d8ba008dd62c4b27, type: 3}
+      objectReference: {fileID: 1950529429, guid: c0035b12a3531124b9f8502b7c0be3f1, type: 3}
     - target: {fileID: 3007904586999559257, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: _characterSelectManager
       value: 
@@ -623,6 +663,14 @@ PrefabInstance:
       propertyPath: _characterSelectManager
       value: 
       objectReference: {fileID: 684694687}
+    - target: {fileID: 6655488005032457474, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655488005032457474, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1950529429, guid: c0035b12a3531124b9f8502b7c0be3f1, type: 3}
     - target: {fileID: 8548093794412426734, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: _characterSprite
       value: 

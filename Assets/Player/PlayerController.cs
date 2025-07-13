@@ -13,14 +13,15 @@ public class PlayerController : MonoBehaviour
 
     [Header("発射位置")]
     [SerializeField] private Transform _muzzle;
-    [SerializeField] private SpriteRenderer _sprite;
+
+
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
     private Animator _animators;
-    
+
     private int _maxHp;
     private float _moveSpeed;
-    private int _currentHp;
+    public int _currentHp;
     private bool _isDead;
     private float _attackPower;
     private bool _isFacingRight = true;
@@ -37,7 +38,6 @@ public class PlayerController : MonoBehaviour
         _moveSpeed = _statusData.MoveSpeed;
         _isDead = false;
         _attackPower = _statusData.Atk;
-        _sprite.sprite = _statusData.Sprite;
     }
 
     void Start()
@@ -50,9 +50,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(Time.timeScale == 0 || _gameManager._stopTime)
+        if (Time.timeScale == 0 || _gameManager._stopTime)
             return;
-        
+
         _weaponTimer -= Time.deltaTime;
         Move();
 
@@ -65,9 +65,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Time.timeScale == 0)
+        if (Time.timeScale == 0)
             return;
-        
+
         _rb.velocity = _moveSpeed * _moveInput;
     }
 
@@ -87,8 +87,8 @@ public class PlayerController : MonoBehaviour
             Flip();
         }
         Anim();
+
     }
-    
     private void Flip()
     {
         _isFacingRight = !_isFacingRight;
@@ -97,7 +97,6 @@ public class PlayerController : MonoBehaviour
         scaler.x *= -1;
         transform.localScale = scaler;
     }
-    
     private void Anim()
     {
         animator.SetBool("RightAnimation", _moveInput.magnitude != 0.0f);
@@ -129,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
         if (_currentHp <= 0)
         {
-             Die();
+            Die();
         }
     }
 
@@ -147,6 +146,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     // ========== 強化/回復 ==========
 
     public void AddWeapon(GameObject weaponPrefab)
@@ -157,6 +157,8 @@ public class PlayerController : MonoBehaviour
         GameObject newWeapon = Instantiate(weaponPrefab, transform.position + Vector3.right, Quaternion.identity);
         newWeapon.transform.SetParent(transform);
         _ownedWeapons.Add(newWeapon);
+
+        Debug.Log($"[Player] 武器追加: {weaponPrefab.name}");
     }
 
     public void UpgradeExistingWeapon(string weaponName)
@@ -169,6 +171,7 @@ public class PlayerController : MonoBehaviour
                 if (upgradable != null)
                 {
                     upgradable.Upgrade();
+                    Debug.Log($"[Player] {weaponName} をレベルアップ");
                 }
                 return;
             }
@@ -180,15 +183,19 @@ public class PlayerController : MonoBehaviour
     public void UpgradeAttack(int amount)
     {
         _attackPower += amount;
+        Debug.Log($"[Player] 攻撃力アップ: +{amount} (現在: {_attackPower})");
     }
 
     public void Heal(int value)
     {
         _currentHp = Mathf.Min(_currentHp + value, _maxHp);
+        Debug.Log($"[Player] HP回復 +{value}（{_currentHp}/{_maxHp}）");
     }
 
     public void BoostSpeed(float amount)
     {
         _moveSpeed += amount;
+        Debug.Log($"[Player] 移動速度 +{amount}（現在: {_moveSpeed}）");
     }
+
 }

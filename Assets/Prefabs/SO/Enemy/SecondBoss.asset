@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594471ead734d5f439102af8d9c9af45, type: 3}
   m_Name: SecondBoss
   m_EditorClassIdentifier: 
-  MAXHP: 100
+  MAXHP: 150
   ATK: 12
   SPEED: 2
   KnockBack: 3
   EXP: 250
   SCORE: 250
   enemyType: 3
-  ATTACKRANGE: 3
+  ATTACKRANGE: 4
   ATTACKINTERVAL: 2
   FireInterval: 3
-  _RUSHSPEED: 5
+  RUSHSPEED: 0
   RUSHINTERVAL: 3
+  ANIM: {fileID: 9100000, guid: 234a801df122f9545826c71e1b31c9cb, type: 2}
+  SPR: {fileID: 8445469178646879675, guid: 1914d95466e3d4341a618c35a56d5f82, type: 3}

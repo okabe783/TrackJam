@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 594471ead734d5f439102af8d9c9af45, type: 3}
-  m_Name: StrongAlian
+  m_Name: Alian
   m_EditorClassIdentifier: 
   MAXHP: 15
   ATK: 10
@@ -22,5 +22,7 @@ MonoBehaviour:
   ATTACKRANGE: 3
   ATTACKINTERVAL: 2
   FireInterval: 0
-  _RUSHSPEED: 0
+  RUSHSPEED: 0
   RUSHINTERVAL: 0
+  ANIM: {fileID: 9100000, guid: 1e084036ccc8d004a9061de2598cffce, type: 2}
+  SPR: {fileID: -1726862176, guid: f132c932a09427947837dbd42f3726d7, type: 3}

@@ -19,4 +19,10 @@ MonoBehaviour:
   EXP: 20
   SCORE: 20
   enemyType: 1
+  ATTACKRANGE: 0
+  ATTACKINTERVAL: 0
   FireInterval: 2
+  RUSHSPEED: 0
+  RUSHINTERVAL: 0
+  ANIM: {fileID: 9100000, guid: a31e0e0e5997a5842992042b3bd1f638, type: 2}
+  SPR: {fileID: -1330731283, guid: 2995c3110f940ec49a6fd56b61cdddff, type: 3}

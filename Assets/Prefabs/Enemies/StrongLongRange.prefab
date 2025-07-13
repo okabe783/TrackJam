@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 7653969951186976189}
   - component: {fileID: 5579388691656069920}
   - component: {fileID: 7855867834147983524}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StrongLongRange
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,6 +109,7 @@ MonoBehaviour:
   _debugLevel: {fileID: 0}
   _isPlayerInRange: 0
   _isHit: 0
+  _currentAtk: 0
 --- !u!61 &7653969951186976189
 BoxCollider2D:
   m_ObjectHideFlags: 0

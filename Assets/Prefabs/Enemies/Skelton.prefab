@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3676812909068380957}
   - component: {fileID: 1564281524290436479}
   - component: {fileID: 3334838470794670269}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Skelton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   _debugLevel: {fileID: 0}
   _isPlayerInRange: 0
   _isHit: 0
+  _currentAtk: 0
 --- !u!50 &1564281524290436479
 Rigidbody2D:
   serializedVersion: 4

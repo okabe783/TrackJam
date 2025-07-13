@@ -82,7 +82,7 @@ public class Enemy : MonoBehaviour
             _playerLevelManager = _debugLevel;
         }
 
-        FacePlayer();
+        if (_muzzle) FacePlayer();
 
         if (_stutsData.enemyType == EnemyStutsData.EnemyType.LongRange
         && _isPlayerInRange
@@ -178,9 +178,6 @@ public class Enemy : MonoBehaviour
         Vector3 dir = _player.gameObject.transform.position - transform.position;
 
         transform.localScale = new Vector3(Mathf.Sign(dir.x), 1, 1);
-
-        // デバッグ：プレイヤーへのライン
-        Debug.DrawLine(_muzzle.position, _player.gameObject.transform.position, Color.red);
     }
 
     /// <summary>

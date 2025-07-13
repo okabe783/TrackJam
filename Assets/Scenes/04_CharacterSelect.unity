@@ -607,6 +607,10 @@ PrefabInstance:
       propertyPath: _characterSelectManager
       value: 
       objectReference: {fileID: 684694687}
+    - target: {fileID: 3778666968991189608, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 911e3788ed7c188458b13185ecbbfad3, type: 3}
     - target: {fileID: 4596261813773760649, guid: b1a93c32f4f092846bb75590fda92f4d, type: 3}
       propertyPath: _characterSprite
       value: 

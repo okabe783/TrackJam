@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594471ead734d5f439102af8d9c9af45, type: 3}
   m_Name: FirstBoss
   m_EditorClassIdentifier: 
-  MAXHP: 50
+  MAXHP: 100
   ATK: 10
   SPEED: 3
   KnockBack: 3
@@ -22,5 +22,7 @@ MonoBehaviour:
   ATTACKRANGE: 3
   ATTACKINTERVAL: 2
   FireInterval: 2
-  _RUSHSPEED: 5
+  RUSHSPEED: 3
   RUSHINTERVAL: 3
+  ANIM: {fileID: 9100000, guid: d0c44245952ecbd4293ef4626b240c3e, type: 2}
+  SPR: {fileID: 483513247, guid: c83e4f8ccfb0aa740ba111f5d10c0792, type: 3}

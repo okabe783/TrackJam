@@ -20,15 +20,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerController _player;
     [SerializeField] private SelectCharacterData _selectCharacterData;
     [SerializeField] private StatusData[] _statusData;
+    [SerializeField] private AudioClip _bgmClip;
     
     public float GameTime => _gameTimer;
 
     void Start()
     {
         _stopTime = true;
+        
+        // インゲームでもうごくよん
         if (_selectCharacterData.CharacterID == 0)
             _selectCharacterData.CharacterID = 1;
 
+        SoundPlayer.I.PlayBgm(_bgmClip);
         SetPlayer();
         _setUIManager.Init(_player);
         StartCoroutine(GameStartCountdown());

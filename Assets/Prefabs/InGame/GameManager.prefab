@@ -61,6 +61,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8e3f6784e18d0654cbb75e2e79cf5f73, type: 2}
   - {fileID: 11400000, guid: d056b24d94338bc40a27809072ce87fb, type: 2}
   - {fileID: 11400000, guid: cf6c2db2708304b4f9e61838b7e07023, type: 2}
+  _bgmClip: {fileID: 8300000, guid: efb9064e69c37764193188605740b4bb, type: 3}
 --- !u!114 &6078109396189848987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,20 +92,31 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _optionUIComponents:
+  - NameText: {fileID: 0}
+    IconImage: {fileID: 0}
+  - NameText: {fileID: 0}
+    IconImage: {fileID: 0}
+  - NameText: {fileID: 0}
+    IconImage: {fileID: 0}
   _allOptions:
-  - optionName: okabe
-    effect: 1
-    value: 5
-    weaponPrefab: {fileID: 0}
-  - optionName: 'yamda '
-    effect: 2
-    value: 5
-    weaponPrefab: {fileID: 0}
-  - optionName: yokosyozi
-    effect: 3
-    value: 5
-    weaponPrefab: {fileID: 0}
-  - optionName: kanda
-    effect: 0
-    value: 5
-    weaponPrefab: {fileID: 773987345360080025, guid: b8dc4239decae084a8d5c8d2fdf575fb, type: 3}
+  - OptionName: 
+    Effect: 0
+    Value: 5
+    WeaponPrefab: {fileID: 773987345360080025, guid: b8dc4239decae084a8d5c8d2fdf575fb, type: 3}
+    Icon: {fileID: -623676149, guid: 56c2ec3074b42e144a0cab83ade65363, type: 3}
+  - OptionName: 
+    Effect: 1
+    Value: 5
+    WeaponPrefab: {fileID: 0}
+    Icon: {fileID: 1437660201, guid: 663d5c7d2c6af404898404d20929c5d4, type: 3}
+  - OptionName: 
+    Effect: 2
+    Value: 0
+    WeaponPrefab: {fileID: 0}
+    Icon: {fileID: -964777592, guid: f0cc135859b1aff41a6ad9c732aa93e1, type: 3}
+  - OptionName: 
+    Effect: 3
+    Value: 0
+    WeaponPrefab: {fileID: 0}
+    Icon: {fileID: 428107654, guid: cd242e597f2086c4e885515bcc027eaa, type: 3}

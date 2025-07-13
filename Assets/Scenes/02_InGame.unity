@@ -907,50 +907,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1128211078}
     - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[0].Icon
-      value: 
-      objectReference: {fileID: -623676149, guid: 56c2ec3074b42e144a0cab83ade65363, type: 3}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[1].Icon
-      value: 
-      objectReference: {fileID: 1437660201, guid: 663d5c7d2c6af404898404d20929c5d4, type: 3}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[2].Icon
-      value: 
-      objectReference: {fileID: -964777592, guid: f0cc135859b1aff41a6ad9c732aa93e1, type: 3}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[3].Icon
-      value: 
-      objectReference: {fileID: 428107654, guid: cd242e597f2086c4e885515bcc027eaa, type: 3}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _optionUIComponents.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[0].Value
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[1].Value
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[1].Effect
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[2].Effect
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[3].Effect
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
-      propertyPath: _allOptions.Array.data[0].WeaponPrefab
-      value: 
-      objectReference: {fileID: 773987345360080025, guid: b8dc4239decae084a8d5c8d2fdf575fb, type: 3}
-    - target: {fileID: 319146946567532452, guid: 1ce7e14924743ac4195c9f6fb04934f6, type: 3}
       propertyPath: _optionUIComponents.Array.data[0].NameText
       value: 
       objectReference: {fileID: 1242330739}

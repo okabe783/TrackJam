@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public class UpgradeOptionUI
+{
+    public Text NameText;
+    public Image IconImage;
+}
+
 public class SetUIManager : MonoBehaviour
 {
     [Header("UIパネル")]
@@ -10,6 +17,9 @@ public class SetUIManager : MonoBehaviour
 
     [Header("選択肢ボタン3つ")]
     [SerializeField] private Button[] _optionButtons;
+    
+    [Header("各ボタンの中のUI部品")]
+    [SerializeField] private UpgradeOptionUI[] _optionUIComponents;
 
     [Header("全アップグレード候補（インスペクターで設定）")]
     [SerializeField] private List<UpgradeOption> _allOptions;
@@ -33,19 +43,20 @@ public class SetUIManager : MonoBehaviour
 
         for (int i = 0; i < _optionButtons.Length; i++)
         {
-            int index = i;
-            UpgradeOption option = selectedOptions[index];
-            Button button = _optionButtons[i];
-            Text buttonText = button.GetComponentInChildren<Text>();
+            var option = selectedOptions[i];
+            var button = _optionButtons[i];
+            var ui = _optionUIComponents[i];
 
-            if (buttonText != null)
-                buttonText.text = option.optionName;
+            // UI更新
+            ui.NameText.text = option.OptionName;
+            ui.IconImage.sprite = option.Icon;
 
+            // リスナー登録
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() =>
             {
-                ApplyUpgrade(option);   // ←選択されたオプション適用
-                CloseUI();              // ←UI閉じて再開処理
+                ApplyUpgrade(option);
+                CloseUI();
             });
         }
     }
@@ -65,28 +76,28 @@ public class SetUIManager : MonoBehaviour
 
     private void ApplyUpgrade(UpgradeOption option)
     {
-        switch (option.effect)
+        switch (option.Effect)
         {
             case UpgradeOption.EffectType.AddWeapon:
-                _player.AddWeapon(option.weaponPrefab);
+                _player.AddWeapon(option.WeaponPrefab);
                 break;
             case UpgradeOption.EffectType.IncreaseAttack:
-                _player.UpgradeAttack(option.value);
+                _player.UpgradeAttack(option.Value);
                 break;
             case UpgradeOption.EffectType.Heal:
-                _player.Heal(option.value);
+                _player.Heal(option.Value);
                 break;
             case UpgradeOption.EffectType.BoostSpeed:
-                _player.BoostSpeed(option.value);
+                _player.BoostSpeed(option.Value);
                 break;
         }
 
-        Debug.Log($"[SetUIManager] Applied upgrade: {option.optionName}");
+        Debug.Log($"[SetUIManager] Applied upgrade: {option.OptionName}");
     }
 
     private void CloseUI()
     {
         _selectionUI.SetActive(false);
-        _onComplete?.Invoke(); // GameManagerがこれでTimeResumeする
+        _onComplete?.Invoke();
     }
 }

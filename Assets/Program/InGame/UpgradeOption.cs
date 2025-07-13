@@ -3,10 +3,11 @@ using UnityEngine;
 [System.Serializable]
 public class UpgradeOption
 {
-    public string optionName;
-    public EffectType effect;
-    public int value;
-    public GameObject weaponPrefab;
+    public string OptionName;
+    public EffectType Effect;
+    public int Value;
+    public GameObject WeaponPrefab;
+    public Sprite Icon;
 
     public enum EffectType
     {

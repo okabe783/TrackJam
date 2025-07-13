@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public bool _isHit;
 
     private int _currentHp;
-    private int _currentAtk;
+    public int _currentAtk;
     private float _fireInterval;
     private int _scoreValue;
     private float _currentSpeed;
@@ -82,11 +82,7 @@ public class Enemy : MonoBehaviour
             _playerLevelManager = _debugLevel;
         }
 
-        if (_muzzle)
-        {
-            FacePlayer();
-        }
-
+        FacePlayer();
 
         if (_stutsData.enemyType == EnemyStutsData.EnemyType.LongRange
         && _isPlayerInRange
@@ -166,9 +162,8 @@ public class Enemy : MonoBehaviour
 
     private void Attack()
     {
-        if (_player == null) return;
-
-        Debug.Log("近距離攻撃！");
+        if (_player == null) 
+            return;
 
         _player.TakeDamage(_currentAtk);
 
@@ -224,6 +219,7 @@ public class Enemy : MonoBehaviour
 
         ScoreManager.I.AddScore(_scoreValue);
 
+        _playerLevelManager.AddExperience(_expGain);
         gameObject.SetActive(false);
     }
 
